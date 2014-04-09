@@ -10,3 +10,4 @@
  */
 
 echo $this->items; ?>
+<div id="map-canvas"></div>
