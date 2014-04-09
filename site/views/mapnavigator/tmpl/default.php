@@ -9,5 +9,5 @@
  * License    GNU GPL v2 or later
  */
 
-echo $this->items; ?>
+?>
 <div id="map-canvas"></div>
