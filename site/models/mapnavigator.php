@@ -24,15 +24,13 @@ class MapnavigatorModelMapnavigator extends JModel
 	/**
 	 * Construct
 	 *
-	 * @param   $subject
-	 * @param   $params
+	 * @internal param $subject
+	 * @internal param $params
 	 */
-	function __construct(&$subject, $params)
+	function __construct()
 	{
-		parent::__construct($subject, $params);
-		$this->app = JFactory::getApplication();
-		$this->db  = JFactory::getDbo();
-		$this->doc = JFactory::getDocument();
+		parent::__construct();
+		$this->db = JFactory::getDbo();
 	}
 
 	/**
