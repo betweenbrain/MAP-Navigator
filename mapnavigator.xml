@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<install type="component" version="1.5.0">
+<install type="component" version="1.5.0" method="upgrade">
 	<author>Matt Thomas</author>
 	<authorEmail>matt@betweenbrain.com</authorEmail>
 	<authorUrl>http://betweenbrain.com</authorUrl>
@@ -14,6 +14,8 @@
 		<filename>controller.php</filename>
 		<filename>index.html</filename>
 		<filename>mapnavigator.php</filename>
+		<filename>models/index.html</filename>
+		<filename>models/mapnavigator.php</filename>
 		<filename>views/index.html</filename>
 		<filename>views/mapnavigator/index.html</filename>
 		<filename>views/mapnavigator/view.html.php</filename>
