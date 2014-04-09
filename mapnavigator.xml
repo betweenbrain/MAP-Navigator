@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<install type="component" version="1.5.0">
+	<author>Matt Thomas</author>
+	<authorEmail>matt@betweenbrain.com</authorEmail>
+	<authorUrl>http://betweenbrain.com</authorUrl>
+	<copyright>(C) 2014 Matt Thomas. All rights reserved.</copyright>
+	<creationDate>April 9, 2014</creationDate>
+	<description>COM_NAVIGATOR_DESC</description>
+	<license>GNU/GPL v2 or later</license>
+	<name>Map Navigator</name>
+	<version>0.1-alpha</version>
+
+	<files folder="site">
+		<filename>controller.php</filename>
+		<filename>index.html</filename>
+		<filename>mapnavigator.php</filename>
+		<filename>views/index.html</filename>
+		<filename>views/mapnavigator/index.html</filename>
+		<filename>views/mapnavigator/view.html.php</filename>
+		<filename>views/mapnavigator/tmpl/default.php</filename>
+		<filename>views/mapnavigator/tmpl/index.html</filename>
+	</files>
+
+	<administration>
+		<menu>Navigate Maps</menu>
+
+		<files folder="admin">
+			<filename>index.html</filename>
+			<filename>mapnavigator.php</filename>
+		</files>
+
+	</administration>
+</install>
