@@ -9,25 +9,72 @@
  * License    GNU GPL v2 or later
  */
 
-$doc = JFactory::getDocument();
-$doc->addScript(JURI::base(true) . '/media/com_mapnavigator/js/map-navigator.min.js');
-$doc->addStylesheet(JURI::base(true) . '/media/com_mapnavigator/css/map-navigator.min.css');
-
 jimport('joomla.application.component.view');
 
 /**
  * HTML View class for the MAP Navigator Component
  *
- * @package    HelloWorld
+ * @package    Mapnavigator
  */
 class MapnavigatorViewMapnavigator extends JView
 {
+	/**
+	 * Construct
+	 */
+	function __construct()
+	{
+		parent::__construct();
+		$this->doc = JFactory::getDocument();
+		$this->doc->addScript(JURI::base(true) . '/media/com_mapnavigator/js/map-navigator.min.js');
+		$this->doc->addStylesheet(JURI::base(true) . '/media/com_mapnavigator/css/map-navigator.min.css');
+	}
+
+	/**
+	 * Display stuff
+	 *
+	 * @param   null $tpl
+	 *
+	 * @return  null
+	 *
+	 * @since 0.1
+	 */
 	function display($tpl = null)
 	{
 		$model = & $this->getModel();
 		$items = $model->getItems();
 		$this->assignRef('items', $items);
 
+		$this->generateVariableData($items);
+
 		parent::display($tpl);
+	}
+
+	/**
+	 * Generates and sets variable data
+	 *
+	 * @param   $items
+	 */
+	private function generateVariableData($items)
+	{
+
+		$infoWindows = "<script>var infoWindowContent = [";
+		$markers     = "<script>var markers = [";
+
+		foreach ($items as $item)
+		{
+			foreach (json_decode($item->locations, true) as $name => $data)
+			{
+				$markers .= "['$name', {$data['lat']}, {$data['lng']}],";
+				$infoWindows .= "['" . addslashes($item->introtext) . "'],";
+			}
+		}
+
+		$infoWindows .= "];</script>";
+		$markers     .= "];</script>";
+
+		$this->doc->addCustomTag($markers);
+		$this->doc->addCustomTag($infoWindows);
+
+		return;
 	}
 }
