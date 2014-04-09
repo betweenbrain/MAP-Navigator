@@ -28,6 +28,10 @@
 		<folder>js</folder>
 	</media>
 
+	<url>
+		<param name="categories" type="text" scope="com_mapnavigator" default="[2]" label="LABEL" description="DESCRIPTION" />
+	</url>
+
 	<administration>
 		<menu>Navigate Maps</menu>
 

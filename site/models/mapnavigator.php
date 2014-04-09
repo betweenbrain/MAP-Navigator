@@ -49,7 +49,7 @@ class MapnavigatorModelMapnavigator extends JModel
 			' ON (' . $this->db->nameQuote('loc.itemId') . ' = ' . $this->db->nameQuote('k2.id') . ')' .
 			' JOIN ' . $this->db->nameQuote('#__k2_additional_categories') . ' AS ' . $this->db->nameQuote('cats') .
 			' ON (' . $this->db->nameQuote('k2.id') . ' = ' . $this->db->nameQuote('cats.itemId') . ')' .
-			' WHERE ' . $this->db->nameQuote('cats.catid') . ' IN (' . implode(',', JRequest::getVar('categories')) . ')' .
+			' WHERE ' . $this->db->nameQuote('cats.catid') . ' IN (' . implode(',', json_decode(JRequest::getVar('categories'))) . ')' .
 			' AND ' . $this->db->nameQuote('k2.trash') . ' = ' . $this->db->quote('0');
 
 		$this->db->setQuery($query);
