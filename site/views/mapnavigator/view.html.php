@@ -9,6 +9,8 @@
  * License    GNU GPL v2 or later
  */
 
+JFactory::getDocument()->addScript(JURI::base(true) . '/media/com_mapnavigator/js/map-navigator.min.js');
+
 jimport('joomla.application.component.view');
 
 /**
