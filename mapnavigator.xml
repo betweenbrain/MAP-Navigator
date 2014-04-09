@@ -23,6 +23,10 @@
 		<filename>views/mapnavigator/tmpl/index.html</filename>
 	</files>
 
+	<media folder="media" destination="com_mapnavigator">
+		<folder>js</folder>
+	</media>
+
 	<administration>
 		<menu>Navigate Maps</menu>
 
