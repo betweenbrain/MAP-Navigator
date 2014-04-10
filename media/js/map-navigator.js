@@ -7,6 +7,33 @@
  * License    GNU GPL v2 or later
  */
 
+(function ($) {
+	$(document).on('click', '.load', function (event) {
+		var request = {
+			'option'    : 'com_mapnavigator',
+			'categories': '[' + $(this).data("category") + ']',
+			'format'    : 'json'
+		};
+		$.ajax({
+			type   : 'POST',
+			data   : request,
+			format : 'json',
+			success: function (response) {
+				deleteMarkers();
+				var markers = eval("(" + response + ")");
+				console.log(markers);
+				for (var key in markers) {
+					if (markers.hasOwnProperty(key)) {
+						var Latlng = new google.maps.LatLng(markers[key].lat, markers[key].lng);
+						addMarker(Latlng, key);
+					}
+				}
+			}
+		});
+		return false;
+	});
+})(jQuery)
+
 jQuery(function ($) {
 	// Asynchronously Load the map API
 	var script = document.createElement('script');
@@ -14,55 +41,20 @@ jQuery(function ($) {
 	document.body.appendChild(script);
 });
 
+// In the following example, markers appear when the user clicks on the map.
+// The markers are stored in an array.
+// The user can then click an option to hide, show or delete the markers.
+var map;
+var markers = [];
+
 function initialize() {
-	var map;
-	var bounds = new google.maps.LatLngBounds();
 	var mapOptions = {
+		zoom     : 2,
+		center   : new google.maps.LatLng(0, 0),
 		mapTypeId: 'roadmap'
 	};
-
-	// Display a map on the page
-	map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-	map.setTilt(45);
-
-	// Display multiple markers on a map
-	var infoWindow = new google.maps.InfoWindow(), marker, i;
-
-	// Loop through our array of markers & place each one on the map
-	for (i = 0; i < markers.length; i++) {
-		var position = new google.maps.LatLng(markers[i][1], markers[i][2]);
-		bounds.extend(position);
-		marker = new google.maps.Marker({
-			icon    : {
-				path        : google.maps.SymbolPath.CIRCLE,
-				scale       : 2,
-				fillColor   : '#8a2b87',
-				fillOpacity : 1,
-				strokeColor : '#8a2b87',
-				strokeWeight: 2
-			},
-			position: position,
-			map     : map,
-			title   : markers[i][0]
-		});
-
-		// Allow each marker to have an info window
-		google.maps.event.addListener(marker, 'click', (function (marker, i) {
-			return function () {
-				infoWindow.setContent(infoWindowContent[i][0]);
-				infoWindow.open(map, marker);
-			}
-		})(marker, i));
-
-		// Automatically center the map fitting all markers on the screen
-		map.fitBounds(bounds);
-	}
-
-	// Override our map zoom level once our fitBounds function runs (Make sure it only runs once)
-	var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function (event) {
-		this.setZoom(3);
-		google.maps.event.removeListener(boundsListener);
-	});
+	map = new google.maps.Map(document.getElementById('map-canvas'),
+		mapOptions);
 
 	var styles = [
 		{
@@ -90,5 +82,47 @@ function initialize() {
 	];
 
 	map.setOptions({styles: styles});
-
 }
+
+// Add a marker to the map and push to the array.
+function addMarker(location, title) {
+	var marker = new google.maps.Marker({
+		position: location,
+		map     : map,
+		title   : title,
+		icon    : {
+			path        : google.maps.SymbolPath.CIRCLE,
+			scale       : 2,
+			fillColor   : '#8a2b87',
+			fillOpacity : 1,
+			strokeColor : '#8a2b87',
+			strokeWeight: 2
+		}
+	});
+	markers.push(marker);
+}
+
+// Sets the map on all markers in the array.
+function setAllMap(map) {
+	for (var i = 0; i < markers.length; i++) {
+		markers[i].setMap(map);
+	}
+}
+
+// Removes the markers from the map, but keeps them in the array.
+function clearMarkers() {
+	setAllMap(null);
+}
+
+// Shows any markers currently in the array.
+function showMarkers() {
+	setAllMap(map);
+}
+
+// Deletes all markers in the array by removing references to them.
+function deleteMarkers() {
+	setAllMap(null);
+	markers = [];
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
