@@ -102,6 +102,35 @@ function addMarker(location, title) {
 			strokeWeight: 2
 		}
 	});
+
+	google.maps.event.addListener(marker, 'mouseover', function () {
+		marker.setIcon({
+			path        : google.maps.SymbolPath.CIRCLE,
+			scale       : 10,
+			fillColor   : 'red',
+			fillOpacity : 1,
+			strokeColor : 'green',
+			strokeWeight: 2
+		});
+	});
+
+	/*
+	 google.maps.event.addListener(marker, 'mouseover', function () {
+		marker.setIcon("http://betweenbrain.com/images/betweenbrain-logo.png");
+	 });
+	 */
+
+	google.maps.event.addListener(marker, 'mouseout', function () {
+		marker.setIcon({
+			path        : google.maps.SymbolPath.CIRCLE,
+			scale       : 5,
+			fillColor   : '#8a2b87',
+			fillOpacity : 1,
+			strokeColor : 'blue',
+			strokeWeight: 2
+		});
+	});
+
 	markers.push(marker);
 }
 
