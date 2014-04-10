@@ -10,4 +10,16 @@
  */
 
 ?>
+<ul>
+	<li>
+		<a href="#" class="load" data-category="2">Load All Markers</a>
+	</li>
+	<li>
+		<a href="#" class="load" data-category="3">Load Artist Markers</a>
+	</li>
+	<li>
+		<a href="#" class="load" data-category="4">Load Programmers Markers</a>
+	</li>
+</ul>
+
 <div id="map-canvas"></div>
