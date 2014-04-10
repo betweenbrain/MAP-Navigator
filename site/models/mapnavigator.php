@@ -69,7 +69,7 @@ class MapnavigatorModelMapnavigator extends JModel
 		{
 			foreach (json_decode($item->locations, true) as $name => $data)
 			{
-				$markers[$name] = array('lat' => $data['lat'], 'lng' => $data['lng'], 'info' => addslashes($item->introtext));
+				$markers[$name] = array('lat' => $data['lat'], 'lng' => $data['lng'], 'info' => $item->introtext);
 			}
 		}
 
