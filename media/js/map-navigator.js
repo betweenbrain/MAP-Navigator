@@ -25,7 +25,8 @@
 				for (var key in markers) {
 					if (markers.hasOwnProperty(key)) {
 						var Latlng = new google.maps.LatLng(markers[key].lat, markers[key].lng);
-						addMarker(Latlng, key);
+						var info = markers[key].info;
+						addMarker(Latlng, key, info);
 					}
 				}
 			}
@@ -47,10 +48,11 @@ window.onload = loadScript;
 // In the following example, markers appear when the user clicks on the map.
 // The markers are stored in an array.
 // The user can then click an option to hide, show or delete the markers.
-var map;
+var infoWnd, map;
 var markers = [];
 
 function initialize() {
+	infoWnd = new google.maps.InfoWindow();
 	var mapOptions = {
 		zoom     : 2,
 		center   : new google.maps.LatLng(0, 0),
@@ -88,7 +90,7 @@ function initialize() {
 }
 
 // Add a marker to the map and push to the array.
-function addMarker(location, title) {
+function addMarker(location, title, info) {
 	var marker = new google.maps.Marker({
 		position: location,
 		map     : map,
@@ -114,21 +116,20 @@ function addMarker(location, title) {
 		});
 	});
 
-	/*
-	 google.maps.event.addListener(marker, 'mouseover', function () {
-		marker.setIcon("http://betweenbrain.com/images/betweenbrain-logo.png");
-	 });
-	 */
-
 	google.maps.event.addListener(marker, 'mouseout', function () {
 		marker.setIcon({
 			path        : google.maps.SymbolPath.CIRCLE,
-			scale       : 5,
+			scale       : 2,
 			fillColor   : '#8a2b87',
 			fillOpacity : 1,
-			strokeColor : 'blue',
+			strokeColor : '#8a2b87',
 			strokeWeight: 2
 		});
+	});
+
+	google.maps.event.addListener(marker, "click", function () {
+		infoWnd.setContent(info);
+		infoWnd.open(map, marker);
 	});
 
 	markers.push(marker);
