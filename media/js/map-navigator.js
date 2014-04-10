@@ -9,6 +9,8 @@
 
 (function ($) {
 	$(document).on('click', '.load', function (event) {
+		// Create new bounds object when loading new markers
+		bounds = new google.maps.LatLngBounds();
 		var request = {
 			'option'    : 'com_mapnavigator',
 			'categories': '[' + $(this).data("category") + ']',
@@ -35,6 +37,7 @@
 	});
 })(jQuery)
 
+// Load API Asynchronously
 function loadScript() {
 	var script = document.createElement('script');
 	script.type = 'text/javascript';
@@ -45,12 +48,9 @@ function loadScript() {
 
 window.onload = loadScript;
 
-// In the following example, markers appear when the user clicks on the map.
-// The markers are stored in an array.
-// The user can then click an option to hide, show or delete the markers.
-var infoWnd, map;
+// Global vars
+var bounds, infoWnd, map;
 var markers = [];
-
 function initialize() {
 	infoWnd = new google.maps.InfoWindow();
 	var mapOptions = {
@@ -105,6 +105,9 @@ function addMarker(location, title, info) {
 		}
 	});
 
+	// Extend boundaries to fit new markers
+	bounds.extend(location);
+
 	google.maps.event.addListener(marker, 'mouseover', function () {
 		marker.setIcon({
 			path        : google.maps.SymbolPath.CIRCLE,
@@ -132,7 +135,10 @@ function addMarker(location, title, info) {
 		infoWnd.open(map, marker);
 	});
 
+	// Push new marker
 	markers.push(marker);
+	// Push new boundaries
+	map.fitBounds(bounds);
 }
 
 // Sets the map on all markers in the array.
