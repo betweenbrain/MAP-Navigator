@@ -20,6 +20,15 @@ class MapnavigatorViewMapnavigator extends JView
 {
 
 	/**
+	 * Construct
+	 */
+	function __construct()
+	{
+		parent::__construct();
+		$this->doc = JFactory::getDocument();
+	}
+
+	/**
 	 * Display stuff
 	 *
 	 * @param   null $tpl
@@ -34,7 +43,10 @@ class MapnavigatorViewMapnavigator extends JView
 		$model = & $this->getModel();
 		$items = $model->getItems();
 
-		echo json_encode($model->generateVariableData($items));
+		// Set the MIME type for JSON output.
+		$this->doc->setMimeEncoding('application/json');
+
+		echo json_encode($model->generateJson($items));
 		$app->close();
 
 	}
