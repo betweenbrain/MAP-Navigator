@@ -34,12 +34,15 @@
 	});
 })(jQuery)
 
-jQuery(function ($) {
-	// Asynchronously Load the map API
+function loadScript() {
 	var script = document.createElement('script');
-	script.src = 'http://maps.googleapis.com/maps/api/js?sensor=false&callback=initialize';
+	script.type = 'text/javascript';
+	script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&' +
+		'callback=initialize';
 	document.body.appendChild(script);
-});
+}
+
+window.onload = loadScript;
 
 // In the following example, markers appear when the user clicks on the map.
 // The markers are stored in an array.
