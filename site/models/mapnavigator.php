@@ -56,4 +56,30 @@ class MapnavigatorModelMapnavigator extends JModel
 
 		return $this->db->loadObjectList();
 	}
+
+	/**
+	 * Generates and sets variable data
+	 *
+	 * @param   $items
+	 */
+	function generateVariableData($items)
+	{
+
+		$infoWindows = "var infoWindowContent = [";
+		$markers     = "var markers = [";
+
+		foreach ($items as $item)
+		{
+			foreach (json_decode($item->locations, true) as $name => $data)
+			{
+				$markers .= "['$name', {$data['lat']}, {$data['lng']}],";
+				$infoWindows .= "['" . addslashes($item->introtext) . "'],";
+			}
+		}
+
+		$infoWindows .= "];";
+		$markers .= "];";
+
+		return $markers . "\n" . $infoWindows;
+	}
 }

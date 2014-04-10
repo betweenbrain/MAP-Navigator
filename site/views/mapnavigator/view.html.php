@@ -40,41 +40,12 @@ class MapnavigatorViewMapnavigator extends JView
 	 */
 	function display($tpl = null)
 	{
-		$model = & $this->getModel();
-		$items = $model->getItems();
+		$model        = & $this->getModel();
+		$items        = $model->getItems();
 		$this->assignRef('items', $items);
 
-		$this->generateVariableData($items);
+		$this->doc->addCustomTag('<script>' .  $model->generateVariableData($items) . '</script>');
 
 		parent::display($tpl);
-	}
-
-	/**
-	 * Generates and sets variable data
-	 *
-	 * @param   $items
-	 */
-	private function generateVariableData($items)
-	{
-
-		$infoWindows = "<script>var infoWindowContent = [";
-		$markers     = "<script>var markers = [";
-
-		foreach ($items as $item)
-		{
-			foreach (json_decode($item->locations, true) as $name => $data)
-			{
-				$markers .= "['$name', {$data['lat']}, {$data['lng']}],";
-				$infoWindows .= "['" . addslashes($item->introtext) . "'],";
-			}
-		}
-
-		$infoWindows .= "];</script>";
-		$markers     .= "];</script>";
-
-		$this->doc->addCustomTag($markers);
-		$this->doc->addCustomTag($infoWindows);
-
-		return;
 	}
 }
