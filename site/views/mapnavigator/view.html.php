@@ -40,11 +40,9 @@ class MapnavigatorViewMapnavigator extends JView
 	 */
 	function display($tpl = null)
 	{
-		$model        = & $this->getModel();
-		$items        = $model->getItems();
+		$model = & $this->getModel();
+		$items = $model->getItems();
 		$this->assignRef('items', $items);
-
-		$this->doc->addCustomTag('<script>' .  $model->generateVariableData($items) . '</script>');
 
 		parent::display($tpl);
 	}
