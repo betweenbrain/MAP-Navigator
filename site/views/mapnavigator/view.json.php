@@ -46,7 +46,7 @@ class MapnavigatorViewMapnavigator extends JView
 		// Set the MIME type for JSON output.
 		$this->doc->setMimeEncoding('application/json');
 
-		echo json_encode($model->generateJson($items));
+		echo json_encode($model->generateMarkerData($items));
 		$app->close();
 
 	}

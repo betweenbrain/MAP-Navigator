@@ -58,18 +58,18 @@ class MapnavigatorModelMapnavigator extends JModel
 	}
 
 	/**
-	 * Generates JSON data
+	 * Generates marker data from items retrieved
 	 *
 	 * @param   $items
 	 */
-	function generateJson($items)
+	function generateMarkerData($items)
 	{
 
 		foreach ($items as $item)
 		{
 			foreach (json_decode($item->locations, true) as $name => $data)
 			{
-				$markers[$name] = array('lat' => $data['lat'], 'lng' => $data['lng'], 'info' => $item->introtext);
+				$markers[] = array('loc' => $name, 'lat' => $data['lat'], 'lng' => $data['lng'], 'info' => $item->introtext, 'title' => $item->title);
 			}
 		}
 
