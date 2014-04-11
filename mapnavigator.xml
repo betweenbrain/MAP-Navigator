@@ -19,6 +19,7 @@
 		<filename>views/index.html</filename>
 		<filename>views/mapnavigator/index.html</filename>
 		<filename>views/mapnavigator/view.html.php</filename>
+		<filename>views/mapnavigator/view.json.php</filename>
 		<filename>views/mapnavigator/tmpl/default.php</filename>
 		<filename>views/mapnavigator/tmpl/index.html</filename>
 	</files>
