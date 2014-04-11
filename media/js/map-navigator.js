@@ -13,7 +13,7 @@
 		bounds = new google.maps.LatLngBounds();
 		var request = {
 			'option'    : 'com_mapnavigator',
-			'categories': '[' + $(this).data("category") + ']',
+			'categories': '[' + $(this).data('category') + ']',
 			'format'    : 'json'
 		};
 		$.ajax({
@@ -23,7 +23,7 @@
 			success: function (response) {
 				deleteMarkers();
 				removeSidebarElements();
-				var markers = eval("(" + response + ")");
+				var markers = eval('(' + response + ')');
 				for (var key in markers) {
 					if (markers.hasOwnProperty(key)) {
 						var Latlng = new google.maps.LatLng(markers[key].lat, markers[key].lng);
@@ -129,7 +129,7 @@ function addMarker(location, title, info) {
 		});
 	});
 
-	google.maps.event.addListener(marker, "click", function () {
+	google.maps.event.addListener(marker, 'click', function () {
 		infoWnd.setContent(info);
 		infoWnd.open(map, marker);
 	});
@@ -144,20 +144,28 @@ function addMarker(location, title, info) {
 
 function createSidebarElement(marker) {
 	//Creates a sidebar button
-	var ul = document.getElementById("sidebar");
-	var li = document.createElement("li");
+	var ul = document.getElementById('sidebar');
+	var li = document.createElement('li');
 	var title = marker.getTitle();
 	li.innerHTML = title;
 	ul.appendChild(li);
 
-	//Trigger a click event to marker when the button is clicked.
-	google.maps.event.addDomListener(li, "click", function () {
-		google.maps.event.trigger(marker, "click");
+	//Trigger a marker event when a sidebar item is acted on
+	google.maps.event.addDomListener(li, 'click', function () {
+		google.maps.event.trigger(marker, 'click');
+	});
+
+	google.maps.event.addDomListener(li, 'mouseover', function () {
+		google.maps.event.trigger(marker, 'mouseover');
+	});
+
+	google.maps.event.addDomListener(li, 'mouseout', function () {
+		google.maps.event.trigger(marker, 'mouseout');
 	});
 }
 
 function removeSidebarElements() {
-	var myNode = document.getElementById("sidebar");
+	var myNode = document.getElementById('sidebar');
 	while (myNode.firstChild) {
 		myNode.removeChild(myNode.firstChild);
 	}
