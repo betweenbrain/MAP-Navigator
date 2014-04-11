@@ -24,12 +24,10 @@
 				deleteMarkers();
 				removeSidebarElements();
 				var markers = eval("(" + response + ")");
-				console.log(markers);
 				for (var key in markers) {
 					if (markers.hasOwnProperty(key)) {
 						var Latlng = new google.maps.LatLng(markers[key].lat, markers[key].lng);
-						var info = markers[key].info;
-						addMarker(Latlng, key, info);
+						addMarker(Latlng, markers[key].title, markers[key].info);
 					}
 				}
 			}
