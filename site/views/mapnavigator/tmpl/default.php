@@ -23,3 +23,4 @@
 </ul>
 
 <div id="map-canvas"></div>
+<ul id="sidebar"></ul>

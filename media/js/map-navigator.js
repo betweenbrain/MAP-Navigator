@@ -22,6 +22,7 @@
 			format : 'json',
 			success: function (response) {
 				deleteMarkers();
+				removeSidebarElements();
 				var markers = eval("(" + response + ")");
 				console.log(markers);
 				for (var key in markers) {
@@ -135,10 +136,33 @@ function addMarker(location, title, info) {
 		infoWnd.open(map, marker);
 	});
 
+	createSidebarElement(marker);
+
 	// Push new marker
 	markers.push(marker);
 	// Push new boundaries
 	map.fitBounds(bounds);
+}
+
+function createSidebarElement(marker) {
+	//Creates a sidebar button
+	var ul = document.getElementById("sidebar");
+	var li = document.createElement("li");
+	var title = marker.getTitle();
+	li.innerHTML = title;
+	ul.appendChild(li);
+
+	//Trigger a click event to marker when the button is clicked.
+	google.maps.event.addDomListener(li, "click", function () {
+		google.maps.event.trigger(marker, "click");
+	});
+}
+
+function removeSidebarElements() {
+	var myNode = document.getElementById("sidebar");
+	while (myNode.firstChild) {
+		myNode.removeChild(myNode.firstChild);
+	}
 }
 
 // Sets the map on all markers in the array.
