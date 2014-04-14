@@ -27,7 +27,7 @@
 				for (var key in markers) {
 					if (markers.hasOwnProperty(key)) {
 						var Latlng = new google.maps.LatLng(markers[key].lat, markers[key].lng);
-						addMarker(Latlng, markers[key].title, markers[key].info);
+						addMarker(Latlng, markers[key].title, markers[key].info, key);
 					}
 				}
 			}
@@ -49,7 +49,9 @@ window.onload = loadScript;
 
 // Global vars
 var bounds, infoWnd, map;
+var infowindows = [];
 var markers = [];
+var active_info = null;
 function initialize() {
 	infoWnd = new google.maps.InfoWindow();
 	var mapOptions = {
@@ -89,7 +91,7 @@ function initialize() {
 }
 
 // Add a marker to the map and push to the array.
-function addMarker(location, title, info) {
+function addMarker(location, title, info, key) {
 	var marker = new google.maps.Marker({
 		position: location,
 		map     : map,
@@ -129,10 +131,12 @@ function addMarker(location, title, info) {
 		});
 	});
 
+	/*
 	google.maps.event.addListener(marker, 'click', function () {
 		infoWnd.setContent(info);
 		infoWnd.open(map, marker);
 	});
+	*/
 
 	createSidebarElement(marker);
 
@@ -140,6 +144,33 @@ function addMarker(location, title, info) {
 	markers.push(marker);
 	// Push new boundaries
 	map.fitBounds(bounds);
+
+
+	var myOptions = {
+		content               : "<div>" + info + "</div>",
+		disableAutoPan        : false,
+		maxWidth              : 0,
+		alignBottom           : true,
+		pixelOffset           : new google.maps.Size(-16, -11),
+		zIndex                : null,
+		boxClass              : "info-windows",
+		closeBoxURL           : "",
+		pane                  : "floatPane",
+		enableEventPropagation: false,
+		infoBoxClearance      : "10px",
+		position              : marker.position
+	};
+	var infowindow = new InfoBox(myOptions); // infoWindow w/ infobox.js
+
+	google.maps.event.addListener(markers[markers.length - 1], 'click', function () {
+		if (active_info) {
+			infowindows[active_info].close();
+		}
+		active_info = this.id;
+		infowindows[this.id].open(this.map);
+		return false;
+	});
+
 }
 
 function createSidebarElement(marker) {
