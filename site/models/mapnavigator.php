@@ -43,6 +43,7 @@ class MapnavigatorModelMapnavigator extends JModel
 		$query = ' SELECT ' .
 			$this->db->nameQuote('k2.title') . ',' .
 			$this->db->nameQuote('k2.introtext') . ',' .
+			$this->db->nameQuote('k2.plugins') . ',' .
 			$this->db->nameQuote('loc.locations') .
 			' FROM ' . $this->db->nameQuote('#__k2_items') . ' AS ' . $this->db->nameQuote('k2') .
 			' JOIN ' . $this->db->nameQuote('#__k2_items_locations') . ' AS ' . $this->db->nameQuote('loc') .
@@ -54,7 +55,7 @@ class MapnavigatorModelMapnavigator extends JModel
 
 		$this->db->setQuery($query);
 
-		return $this->db->loadObjectList();
+		return $this->setUniversalFields($this->db->loadObjectList());
 	}
 
 	/**
@@ -64,15 +65,53 @@ class MapnavigatorModelMapnavigator extends JModel
 	 */
 	function generateMarkerData($items)
 	{
-
+		$key = null;
 		foreach ($items as $item)
 		{
 			foreach (json_decode($item->locations, true) as $name => $data)
 			{
-				$markers[] = array('loc' => $name, 'lat' => $data['lat'], 'lng' => $data['lng'], 'info' => $item->introtext, 'title' => $item->title);
+				$markers[$key]['loc']   = $name;
+				$markers[$key]['lat']   = $data['lat'];
+				$markers[$key]['lng']   = $data['lng'];
+				$markers[$key]['info']  = $item->introtext;
+				$markers[$key]['title'] = $item->title;
+
+				if (array_key_exists('itemImage', $item->universalFields))
+				{
+					$markers[$key]['image'] = $item->universalFields->itemImage;
+				}
+
+				$key++;
 			}
 		}
 
 		return $markers;
+	}
+
+	/**
+	 * Inspects the plugins data of the item, in search for universal fields, and attaches them to the item object if found
+	 *
+	 * @param $items
+	 *
+	 * @return mixed
+	 */
+	function setUniversalFields($items)
+	{
+		foreach ($items as $item)
+		{
+			$item->universalFields = new stdClass;
+
+			array_walk(parse_ini_string($item->plugins), function (&$v, $k) use ($item)
+			{
+				if (preg_match('/universal_fields/', $k))
+				{
+					$k                         = str_replace('universal_fields', '', $k);
+					$item->universalFields->$k = $v;
+				}
+			});
+		}
+
+		return $items;
+
 	}
 }
