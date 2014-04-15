@@ -26,6 +26,9 @@
 				var markers = eval('(' + response + ')');
 				for (var key in markers) {
 					if (markers.hasOwnProperty(key)) {
+						if (markers[key].hasOwnProperty("image")) {
+							markers[key].info = '<img src="' + markers[key].image + '"/>' + markers[key].info;
+						}
 						var Latlng = new google.maps.LatLng(markers[key].lat, markers[key].lng);
 						addMarker(Latlng, markers[key].title, markers[key].info);
 					}
