@@ -30,7 +30,7 @@
 							markers[key].info = '<img src="' + markers[key].image + '"/>' + markers[key].info;
 						}
 						var Latlng = new google.maps.LatLng(markers[key].lat, markers[key].lng);
-						addMarker(Latlng, markers[key].title, markers[key].info);
+						addMarker(Latlng, markers[key].title, markers[key].info, markers[key].type);
 					}
 				}
 			}
@@ -92,7 +92,7 @@ function initialize() {
 }
 
 // Add a marker to the map and push to the array.
-function addMarker(location, title, info) {
+function addMarker(location, title, info, type) {
 	var marker = new google.maps.Marker({
 		position: location,
 		map     : map,
@@ -137,7 +137,14 @@ function addMarker(location, title, info) {
 		infoWnd.open(map, marker);
 	});
 
-	createSidebarElement(marker);
+
+	// Check if marker has already been pushed to the markers title array
+	if (markers[title] !== title) {
+		createSidebarElement(marker);
+	}
+
+	// Push to the markers title array
+	markers[title] = title;
 
 	// Push new marker
 	markers.push(marker);
@@ -196,5 +203,3 @@ function deleteMarkers() {
 	setAllMap(null);
 	markers = [];
 }
-
-google.maps.event.addDomListener(window, 'load', initialize);
