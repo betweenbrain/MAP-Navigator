@@ -68,20 +68,27 @@ class MapnavigatorModelMapnavigator extends JModel
 		$key = null;
 		foreach ($items as $item)
 		{
-			foreach (json_decode($item->locations, true) as $name => $data)
+
+			foreach (json_decode($item->locations, true) as $type => $locales)
 			{
-				$markers[$key]['loc']   = $name;
-				$markers[$key]['lat']   = $data['lat'];
-				$markers[$key]['lng']   = $data['lng'];
-				$markers[$key]['info']  = $item->introtext;
-				$markers[$key]['title'] = $item->title;
 
-				if (array_key_exists('itemImage', $item->universalFields))
+				foreach ($locales as $name => $data)
 				{
-					$markers[$key]['image'] = $item->universalFields->itemImage;
-				}
 
-				$key++;
+					$markers[$key]['loc']   = $name;
+					$markers[$key]['type']  = $type;
+					$markers[$key]['lat']   = $data['lat'];
+					$markers[$key]['lng']   = $data['lng'];
+					$markers[$key]['info']  = $item->introtext;
+					$markers[$key]['title'] = $item->title;
+
+					if (array_key_exists('itemImage', $item->universalFields))
+					{
+						$markers[$key]['image'] = $item->universalFields->itemImage;
+					}
+
+					$key++;
+				}
 			}
 		}
 
