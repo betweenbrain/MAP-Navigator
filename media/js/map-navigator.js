@@ -21,6 +21,7 @@
 			data   : request,
 			format : 'json',
 			success: function (response) {
+
 				deleteMarkers();
 				removeSidebarElements();
 				var markers = eval('(' + response + ')');
@@ -33,6 +34,8 @@
 						addMarker(Latlng, markers[key].title, markers[key].info, markers[key].type);
 					}
 				}
+
+				console.log(markers);
 			}
 		});
 		return false;
@@ -166,11 +169,19 @@ function createSidebarElement(marker) {
 	});
 
 	google.maps.event.addDomListener(li, 'mouseover', function () {
-		google.maps.event.trigger(marker, 'mouseover');
+		for (var i = 0; i < markers.length; i++) {
+			if (markers[i].title === title) {
+				google.maps.event.trigger(markers[i], 'mouseover');
+			}
+		}
 	});
 
 	google.maps.event.addDomListener(li, 'mouseout', function () {
-		google.maps.event.trigger(marker, 'mouseout');
+		for (var i = 0; i < markers.length; i++) {
+			if (markers[i].title === title) {
+				google.maps.event.trigger(markers[i], 'mouseout');
+			}
+		}
 	});
 }
 
