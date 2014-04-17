@@ -29,14 +29,15 @@
 		<folder>js</folder>
 	</media>
 
-	<url>
-		<param name="categories" type="text" scope="com_mapnavigator" default="[2]" label="LABEL" description="DESCRIPTION" />
+	<url addpath="/administrator/components/com_mapnavigator/elements">
+		<param name="primaryCategory" type="k2categories" scope="com_mapnavigator" default="" label="Primary Category" description="The primary, or parent, category that all K2 items are assigned to and is the parent of sub-categories." />
 	</url>
 
 	<administration>
 		<menu>Navigate Maps</menu>
 
 		<files folder="admin">
+			<folder>elements</folder>
 			<filename>index.html</filename>
 			<filename>mapnavigator.php</filename>
 		</files>
