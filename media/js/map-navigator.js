@@ -7,6 +7,18 @@
  * License    GNU GPL v2 or later
  */
 
+// Load API Asynchronously
+function loadScript() {
+	var script = document.createElement('script');
+	script.type = 'text/javascript';
+	script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&' +
+		'callback=initialize';
+	document.body.appendChild(script);
+}
+
+window.onload = loadScript;
+
+// Load markers via Ajax
 (function ($) {
 	$(document).on('click', '.load', function (event) {
 		// Create new bounds object when loading new markers
@@ -21,37 +33,28 @@
 			data   : request,
 			format : 'json',
 			success: function (response) {
-
 				deleteMarkers();
 				removeSidebarElements();
 				var markers = eval('(' + response + ')');
 				for (var key in markers) {
 					if (markers.hasOwnProperty(key)) {
+
+						// Append image to introtext if item has an image defined
 						if (markers[key].hasOwnProperty("image")) {
 							markers[key].info = '<img src="' + markers[key].image + '"/>' + markers[key].info;
 						}
+
+						// Calculate Google Maps latitude and longitude
 						var Latlng = new google.maps.LatLng(markers[key].lat, markers[key].lng);
+
 						addMarker(Latlng, markers[key].title, markers[key].info, markers[key].type);
 					}
 				}
-
-				console.log(markers);
 			}
 		});
 		return false;
 	});
 })(jQuery)
-
-// Load API Asynchronously
-function loadScript() {
-	var script = document.createElement('script');
-	script.type = 'text/javascript';
-	script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&' +
-		'callback=initialize';
-	document.body.appendChild(script);
-}
-
-window.onload = loadScript;
 
 // Global vars
 var bounds, infoWnd, map;
@@ -100,39 +103,18 @@ function addMarker(location, title, info, type) {
 		position: location,
 		map     : map,
 		title   : title,
-		icon    : {
-			path        : google.maps.SymbolPath.CIRCLE,
-			scale       : 2,
-			fillColor   : '#8a2b87',
-			fillOpacity : 1,
-			strokeColor : '#8a2b87',
-			strokeWeight: 2
-		}
+		icon    : 'images/' + type + '.png'
 	});
 
 	// Extend boundaries to fit new markers
 	bounds.extend(location);
 
 	google.maps.event.addListener(marker, 'mouseover', function () {
-		marker.setIcon({
-			path        : google.maps.SymbolPath.CIRCLE,
-			scale       : 10,
-			fillColor   : 'red',
-			fillOpacity : 1,
-			strokeColor : 'green',
-			strokeWeight: 2
-		});
+		marker.setIcon('images/' + type + '-hover.png');
 	});
 
 	google.maps.event.addListener(marker, 'mouseout', function () {
-		marker.setIcon({
-			path        : google.maps.SymbolPath.CIRCLE,
-			scale       : 2,
-			fillColor   : '#8a2b87',
-			fillOpacity : 1,
-			strokeColor : '#8a2b87',
-			strokeWeight: 2
-		});
+		marker.setIcon('images/' + type + '.png');
 	});
 
 	google.maps.event.addListener(marker, 'click', function () {
