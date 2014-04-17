@@ -1,0 +1,7 @@
+<metadata>
+	<state>
+		<params addpath="/administrator/components/com_mapnavigator/elements">
+			<param name="primaryCategory" type="k2categories" scope="com_mapnavigator" default="" label="Primary Category" description="The primary, or parent, category that all K2 items are assigned to and is the parent of sub-categories." />
+		</params>
+	</state>
+</metadata>

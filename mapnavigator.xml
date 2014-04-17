@@ -21,6 +21,7 @@
 		<filename>views/mapnavigator/view.html.php</filename>
 		<filename>views/mapnavigator/view.json.php</filename>
 		<filename>views/mapnavigator/tmpl/default.php</filename>
+		<filename>views/mapnavigator/tmpl/default.xml</filename>
 		<filename>views/mapnavigator/tmpl/index.html</filename>
 	</files>
 
@@ -28,10 +29,6 @@
 		<folder>css</folder>
 		<folder>js</folder>
 	</media>
-
-	<url addpath="/administrator/components/com_mapnavigator/elements">
-		<param name="primaryCategory" type="k2categories" scope="com_mapnavigator" default="" label="Primary Category" description="The primary, or parent, category that all K2 items are assigned to and is the parent of sub-categories." />
-	</url>
 
 	<administration>
 		<menu>Navigate Maps</menu>
