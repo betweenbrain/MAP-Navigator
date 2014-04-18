@@ -8,7 +8,7 @@
  * Copyright  Copyright (C) 2014 betweenbrain llc. All Rights Reserved.
  * License    GNU GPL v2 or later
  */
-
+$params = & JComponentHelper::getParams('com_mapnavigator');
 ?>
 <section class="map-navigator">
 	<ul id="sidebar"></ul>
@@ -19,11 +19,14 @@
 					<label>
 						<input class="filters" type="checkbox" name="categories[]" value="<?php echo $category->id ?>"><?php echo $category->name ?>
 					</label>
+					<?php if ($category->id === $params->get('artistCategory')) : ?>
+						<br />
+						<input type="radio" name="location" value="birth">Born
+						<input type="radio" name="location" value="primary" checked>Works
+					<?php endif ?>
 				</li>
 			<?php endforeach ?>
 		</ul>
-		<input type="radio" name="location" value="birth">Born<br>
-		<input type="radio" name="location" value="primary" checked>Primary
 	</form>
 </section>
 

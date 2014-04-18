@@ -44,6 +44,7 @@ class MapnavigatorModelMapnavigator extends JModel
 			$this->db->nameQuote('k2.title') . ',' .
 			$this->db->nameQuote('k2.introtext') . ',' .
 			$this->db->nameQuote('k2.plugins') . ',' .
+			$this->db->nameQuote('cats.catid') . ',' .
 			$this->db->nameQuote('loc.locations') .
 			' FROM ' . $this->db->nameQuote('#__k2_items') . ' AS ' . $this->db->nameQuote('k2') .
 			' JOIN ' . $this->db->nameQuote('#__k2_items_locations') . ' AS ' . $this->db->nameQuote('loc') .
@@ -79,13 +80,40 @@ class MapnavigatorModelMapnavigator extends JModel
 	 */
 	function generateMarkerData($items)
 	{
-		$key = null;
+		$key    = null;
+		$params = & JComponentHelper::getParams('com_mapnavigator');
 
 		foreach ($items as $item)
 		{
-			foreach (json_decode($item->locations, true) as $type => $locales)
+			if ($item->catid === $params->get('artistCategory'))
 			{
-				if ($type === JRequest::getVar('location'))
+				foreach (json_decode($item->locations, true) as $type => $locales)
+				{
+					if ($type === JRequest::getVar('location'))
+					{
+						foreach ($locales as $name => $data)
+						{
+							$markers[$key]['loc']   = $name;
+							$markers[$key]['type']  = $type;
+							$markers[$key]['lat']   = $data['lat'];
+							$markers[$key]['lng']   = $data['lng'];
+							$markers[$key]['info']  = $item->introtext;
+							$markers[$key]['title'] = $item->title;
+							$markers[$key]['test']  = JRequest::getVar('location');
+
+							if (array_key_exists('itemImage', $item->universalFields))
+							{
+								$markers[$key]['image'] = $item->universalFields->itemImage;
+							}
+
+							$key++;
+						}
+					}
+				}
+			}
+			else
+			{
+				foreach (json_decode($item->locations, true) as $type => $locales)
 				{
 					foreach ($locales as $name => $data)
 					{
