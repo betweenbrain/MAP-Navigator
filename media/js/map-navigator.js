@@ -170,14 +170,19 @@ function deleteMarkers() {
 		}, 1000);
 	});
 
-	$(document).on('click', '.load', function (event) {
+	$(document).on('click', 'input:checkbox', function () {
+
 		var request = {
-			'option'    : 'com_mapnavigator',
-			'categories': '[' + $(this).data('category') + ']',
-			'format'    : 'json'
+			'option': 'com_mapnavigator',
+			'format': 'json'
 		};
+
+		request.categories = [];
+		$('input.filters:checked').each(function (i) {
+			request.categories[i] = $(this).attr('value');
+		});
+
 		loadMarkers(request);
-		return false;
 	});
 
 	function loadMarkers(request) {
@@ -210,4 +215,3 @@ function deleteMarkers() {
 	};
 
 })(jQuery)
-
