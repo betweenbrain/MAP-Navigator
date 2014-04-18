@@ -66,7 +66,7 @@ function addMarker(location, title, info, type) {
 		position: location,
 		map     : map,
 		title   : title,
-		icon    : 'images/' + type + '.png'
+		icon    : 'http://media.guggenheim.org/map-navigator/' + type + '.png'
 	});
 
 	// Extend boundaries to fit new markers
@@ -174,10 +174,10 @@ function deleteMarkers() {
 		setTimeout(function () {
 			$("input:checkbox:first").trigger('click');
 			var request = {
-				'option': 'com_mapnavigator',
-				'format': 'json',
-				'categories[]' : $("input:checkbox:first").val(),
-				'location' : $('input:radio:checked').val()
+				'option'      : 'com_mapnavigator',
+				'format'      : 'json',
+				'categories[]': $("input:checkbox:first").val(),
+				'location'    : $('input:radio:checked').val()
 			};
 			loadMarkers(request);
 		}, 1000);
@@ -186,9 +186,9 @@ function deleteMarkers() {
 	$(document).on('click', 'form input', function () {
 		// Instantiate request object
 		var request = {
-			'option': 'com_mapnavigator',
-			'format': 'json',
-			'location' : $('input:radio:checked').val()
+			'option'  : 'com_mapnavigator',
+			'format'  : 'json',
+			'location': $('input:radio:checked').val()
 		};
 
 		// Append categories of checked boxed to request object
