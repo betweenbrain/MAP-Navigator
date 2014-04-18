@@ -58,13 +58,6 @@ class MapnavigatorModelMapnavigator extends JModel
 		return $this->setUniversalFields($this->db->loadObjectList());
 	}
 
-	/**
-	 * Looks up and returns the child categories ID and Name of the passed parent category
-	 *
-	 * @param $primaryCategory
-	 *
-	 * @return mixed
-	 */
 	function getCategories($primaryCategory)
 	{
 		$query = ' SELECT ' .
@@ -87,28 +80,30 @@ class MapnavigatorModelMapnavigator extends JModel
 	function generateMarkerData($items)
 	{
 		$key = null;
+
 		foreach ($items as $item)
 		{
-
 			foreach (json_decode($item->locations, true) as $type => $locales)
 			{
-
-				foreach ($locales as $name => $data)
+				if ($type === JRequest::getVar('location'))
 				{
-
-					$markers[$key]['loc']   = $name;
-					$markers[$key]['type']  = $type;
-					$markers[$key]['lat']   = $data['lat'];
-					$markers[$key]['lng']   = $data['lng'];
-					$markers[$key]['info']  = $item->introtext;
-					$markers[$key]['title'] = $item->title;
-
-					if (array_key_exists('itemImage', $item->universalFields))
+					foreach ($locales as $name => $data)
 					{
-						$markers[$key]['image'] = $item->universalFields->itemImage;
-					}
+						$markers[$key]['loc']   = $name;
+						$markers[$key]['type']  = $type;
+						$markers[$key]['lat']   = $data['lat'];
+						$markers[$key]['lng']   = $data['lng'];
+						$markers[$key]['info']  = $item->introtext;
+						$markers[$key]['title'] = $item->title;
+						$markers[$key]['test']  = JRequest::getVar('location');
 
-					$key++;
+						if (array_key_exists('itemImage', $item->universalFields))
+						{
+							$markers[$key]['image'] = $item->universalFields->itemImage;
+						}
+
+						$key++;
+					}
 				}
 			}
 		}
