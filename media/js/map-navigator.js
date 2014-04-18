@@ -172,17 +172,24 @@ function deleteMarkers() {
 	// Simulate clicking first element 1 second after loading page
 	$(window).bind("load", function () {
 		setTimeout(function () {
-			$(".load:first").trigger('click');
+			$("input:checkbox:first").trigger('click');
+			var request = {
+				'option': 'com_mapnavigator',
+				'format': 'json',
+				'categories[]' : $("input:checkbox:first").val()
+			};
+			loadMarkers(request);
 		}, 1000);
 	});
 
 	$(document).on('click', 'input:checkbox', function () {
-
+		// Instantiate request object
 		var request = {
 			'option': 'com_mapnavigator',
 			'format': 'json'
 		};
 
+		// Append categories of checked boxed to request object
 		request.categories = [];
 		$('input.filters:checked').each(function (i) {
 			request.categories[i] = $(this).attr('value');
