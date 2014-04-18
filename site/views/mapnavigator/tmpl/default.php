@@ -9,7 +9,6 @@
  * License    GNU GPL v2 or later
  */
 
-
 ?>
 <section class="map-navigator">
 	<ul id="sidebar"></ul>
@@ -18,12 +17,13 @@
 			<?php foreach ($this->categories as $category) : ?>
 				<li>
 					<label>
-						<input class="filters" type="checkbox" name="categories[]" value="<?php echo $category->id ?>">
-						<?php echo $category->name ?>
+						<input class="filters" type="checkbox" name="categories[]" value="<?php echo $category->id ?>"><?php echo $category->name ?>
 					</label>
 				</li>
 			<?php endforeach ?>
 		</ul>
+		<input type="radio" name="location" value="birth">Born<br>
+		<input type="radio" name="location" value="primary" checked>Primary
 	</form>
 </section>
 
