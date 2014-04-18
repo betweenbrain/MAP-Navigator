@@ -73,15 +73,15 @@ function addMarker(location, title, info, type) {
 	bounds.extend(location);
 
 	google.maps.event.addListener(marker, 'mouseover', function () {
-		marker.setIcon('images/' + type + '-hover.png');
+		marker.setIcon('http://media.guggenheim.org/map-navigator/' + type + '-hover.png');
 	});
 
 	google.maps.event.addListener(marker, 'mouseout', function () {
-		marker.setIcon('images/' + type + '.png');
+		marker.setIcon('http://media.guggenheim.org/map-navigator/' + type + '.png');
 	});
 
 	google.maps.event.addListener(marker, 'click', function () {
-		infoWnd.setContent(title + '<img src="images/' + type + '.png"/>');
+		infoWnd.setContent(title + '<img src="http://media.guggenheim.org/map-navigator/' + type + '.png"/>');
 		infoWnd.open(map, marker);
 	});
 
