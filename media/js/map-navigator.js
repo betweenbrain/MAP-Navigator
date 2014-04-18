@@ -85,7 +85,6 @@ function addMarker(location, title, info, type) {
 		infoWnd.open(map, marker);
 	});
 
-
 	// Check if marker has already been pushed to the markers title array
 	if (markers[title] !== title) {
 		createSidebarElement(marker, info);
@@ -105,7 +104,7 @@ function createSidebarElement(marker, info) {
 	var ul = document.getElementById('sidebar');
 	var li = document.createElement('li');
 	var title = marker.getTitle();
-	li.innerHTML = '<a class="toggle">' + title + '</a><div class="hidden" style="display: none">' + info + '</div>';
+	li.innerHTML = '<a id="' + marker.__gm_id + '" class="toggle">' + title + '</a><div class="hidden" style="display: none">' + info + '</div>';
 	ul.appendChild(li);
 
 	//Trigger a marker event when a sidebar item is acted on
@@ -163,8 +162,11 @@ function deleteMarkers() {
 // Load markers via Ajax
 (function ($) {
 
+	// Toggle next hidden div and close all others that are visible
 	$(document).on('click', 'a.toggle', function () {
-		$(this).next('.hidden').toggle();
+		$(this).next('.hidden').toggle(function () {
+			$('.hidden:visible').not(this).hide();
+		});
 	});
 
 	// Simulate clicking first element 1 second after loading page
