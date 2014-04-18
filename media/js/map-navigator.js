@@ -18,43 +18,6 @@ function loadScript() {
 
 window.onload = loadScript;
 
-// Load markers via Ajax
-(function ($) {
-	$(document).on('click', '.load', function (event) {
-		// Create new bounds object when loading new markers
-		bounds = new google.maps.LatLngBounds();
-		var request = {
-			'option'    : 'com_mapnavigator',
-			'categories': '[' + $(this).data('category') + ']',
-			'format'    : 'json'
-		};
-		$.ajax({
-			type   : 'POST',
-			data   : request,
-			format : 'json',
-			success: function (response) {
-				deleteMarkers();
-				removeSidebarElements();
-				var markers = eval('(' + response + ')');
-				for (var key in markers) {
-					if (markers.hasOwnProperty(key)) {
-
-						// Append image to introtext if item has an image defined
-						if (markers[key].hasOwnProperty("image")) {
-							markers[key].info = '<img src="' + markers[key].image + '"/>' + markers[key].info;
-						}
-
-						// Calculate Google Maps latitude and longitude
-						var Latlng = new google.maps.LatLng(markers[key].lat, markers[key].lng);
-
-						addMarker(Latlng, markers[key].title, markers[key].info, markers[key].type);
-					}
-				}
-			}
-		});
-		return false;
-	});
-})(jQuery)
 
 // Global vars
 var bounds, infoWnd, map;
@@ -196,3 +159,55 @@ function deleteMarkers() {
 	setAllMap(null);
 	markers = [];
 }
+
+// Load markers via Ajax
+(function ($) {
+
+	// Simulate clicking first element 1 second after loading page
+	$(window).bind("load", function () {
+		setTimeout(function () {
+			$(".load:first").trigger('click');
+		}, 1000);
+	});
+
+	$(document).on('click', '.load', function (event) {
+		var request = {
+			'option'    : 'com_mapnavigator',
+			'categories': '[' + $(this).data('category') + ']',
+			'format'    : 'json'
+		};
+		loadMarkers(request);
+		return false;
+	});
+
+	function loadMarkers(request) {
+		// Create new bounds object when loading new markers
+		bounds = new google.maps.LatLngBounds();
+		$.ajax({
+			type   : 'POST',
+			data   : request,
+			format : 'json',
+			success: function (response) {
+				deleteMarkers();
+				removeSidebarElements();
+				var markers = eval('(' + response + ')');
+				for (var key in markers) {
+					if (markers.hasOwnProperty(key)) {
+
+						// Append image to introtext if item has an image defined
+						if (markers[key].hasOwnProperty("image")) {
+							markers[key].info = '<img src="' + markers[key].image + '"/>' + markers[key].info;
+						}
+
+						// Calculate Google Maps latitude and longitude
+						var Latlng = new google.maps.LatLng(markers[key].lat, markers[key].lng);
+
+						addMarker(Latlng, markers[key].title, markers[key].info, markers[key].type);
+					}
+				}
+			}
+		});
+	};
+
+})(jQuery)
+
