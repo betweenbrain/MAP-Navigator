@@ -45,7 +45,12 @@ class MapnavigatorModelMapnavigator extends JModel
 			$this->db->nameQuote('k2.introtext') . ',' .
 			$this->db->nameQuote('k2.plugins') . ',' .
 			$this->db->nameQuote('cats.catid') . ',' .
-			$this->db->nameQuote('loc.locations') .
+			$this->db->nameQuote('loc.locations') . ',' .
+			' ( SELECT ' .
+			' GROUP_CONCAT(' . $this->db->nameQuote('cats.catid') . ')' .
+			' FROM ' . $this->db->nameQuote('#__k2_additional_categories') . ' AS ' . $this->db->nameQuote('cats') .
+			' WHERE ' . $this->db->nameQuote('k2.id') . ' = ' . $this->db->nameQuote('cats.itemId') .
+			') AS ' . $this->db->nameQuote('categories') .
 			' FROM ' . $this->db->nameQuote('#__k2_items') . ' AS ' . $this->db->nameQuote('k2') .
 			' JOIN ' . $this->db->nameQuote('#__k2_items_locations') . ' AS ' . $this->db->nameQuote('loc') .
 			' ON (' . $this->db->nameQuote('loc.itemId') . ' = ' . $this->db->nameQuote('k2.id') . ')' .
