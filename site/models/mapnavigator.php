@@ -71,7 +71,8 @@ class MapnavigatorModelMapnavigator extends JModel
 			$this->db->nameQuote('id') . ',' .
 			$this->db->nameQuote('name') .
 			' FROM ' . $this->db->nameQuote('#__k2_categories') .
-			' WHERE ' . $this->db->nameQuote('parent') . ' = ' . $this->db->quote($primaryCategory);
+			' WHERE ' . $this->db->nameQuote('parent') . ' = ' . $this->db->quote($primaryCategory) .
+			' AND ' . $this->db->nameQuote('published') . ' = ' . $this->db->quote('1');
 
 		$this->db->setQuery($query);
 
