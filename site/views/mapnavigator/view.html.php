@@ -40,8 +40,13 @@ class MapnavigatorViewMapnavigator extends JView
 	 */
 	function display($tpl = null)
 	{
-		$model = & $this->getModel();
-		$items = $model->getItems();
+		$model  = & $this->getModel();
+		$params = & JComponentHelper::getParams('com_mapnavigator');
+
+		$items      = $model->getItems();
+		$categories = $model->getCategories($params->get('primaryCategory'));
+
+		$this->assignRef('categories', $categories);
 		$this->assignRef('items', $items);
 
 		parent::display($tpl);
