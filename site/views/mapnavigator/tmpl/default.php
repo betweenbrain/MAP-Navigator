@@ -9,20 +9,22 @@
  * License    GNU GPL v2 or later
  */
 
+
 ?>
 <section class="map-navigator">
-	<ul>
-		<li>
-			<a href="#" class="load" data-category="2">Load All Markers</a>
-		</li>
-		<li>
-			<a href="#" class="load" data-category="3">Load Artist Markers</a>
-		</li>
-		<li>
-			<a href="#" class="load" data-category="4">Load Programmers Markers</a>
-		</li>
-	</ul>
 	<ul id="sidebar"></ul>
-
-	<div id="map-canvas"></div>
+	<form>
+		<ul>
+			<?php foreach ($this->categories as $category) : ?>
+				<li>
+					<label>
+						<input class="filters" type="checkbox" name="categories[]" value="<?php echo $category->id ?>">
+						<?php echo $category->name ?>
+					</label>
+				</li>
+			<?php endforeach ?>
+		</ul>
+	</form>
 </section>
+
+<div id="map-canvas"></div>
