@@ -88,7 +88,7 @@ function addMarker(location, title, info, type) {
 
 	// Check if marker has already been pushed to the markers title array
 	if (markers[title] !== title) {
-		createSidebarElement(marker);
+		createSidebarElement(marker, info);
 	}
 
 	// Push to the markers title array
@@ -100,12 +100,12 @@ function addMarker(location, title, info, type) {
 	map.fitBounds(bounds);
 }
 
-function createSidebarElement(marker) {
+function createSidebarElement(marker, info) {
 	//Creates a sidebar button
 	var ul = document.getElementById('sidebar');
 	var li = document.createElement('li');
 	var title = marker.getTitle();
-	li.innerHTML = title;
+	li.innerHTML = '<a class="toggle">' + title + '</a><div class="hidden" style="display: none">' + info + '</div>';
 	ul.appendChild(li);
 
 	//Trigger a marker event when a sidebar item is acted on
@@ -162,6 +162,10 @@ function deleteMarkers() {
 
 // Load markers via Ajax
 (function ($) {
+
+	$(document).on('click', 'a.toggle', function () {
+		$(this).next('.hidden').toggle();
+	});
 
 	// Simulate clicking first element 1 second after loading page
 	$(window).bind("load", function () {
