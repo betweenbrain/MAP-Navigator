@@ -59,6 +59,26 @@ class MapnavigatorModelMapnavigator extends JModel
 	}
 
 	/**
+	 * Looks up and returns the child categories ID and Name of the passed parent category
+	 *
+	 * @param $primaryCategory
+	 *
+	 * @return mixed
+	 */
+	function getCategories($primaryCategory)
+	{
+		$query = ' SELECT ' .
+			$this->db->nameQuote('id') . ',' .
+			$this->db->nameQuote('name') .
+			' FROM ' . $this->db->nameQuote('#__k2_categories') .
+			' WHERE ' . $this->db->nameQuote('parent') . ' = ' . $this->db->quote($primaryCategory);
+
+		$this->db->setQuery($query);
+
+		return $this->db->loadObjectList();
+	}
+
+	/**
 	 * Generates marker data from items retrieved
 	 *
 	 * @param   $items
