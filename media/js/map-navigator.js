@@ -81,7 +81,7 @@ function addMarker(location, title, info, type) {
 	});
 
 	google.maps.event.addListener(marker, 'click', function () {
-		infoWnd.setContent(info);
+		infoWnd.setContent(title + '<img src="images/' + type + '.png"/>');
 		infoWnd.open(map, marker);
 	});
 
