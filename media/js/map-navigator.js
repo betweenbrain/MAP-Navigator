@@ -176,23 +176,25 @@ function deleteMarkers() {
 			var request = {
 				'option': 'com_mapnavigator',
 				'format': 'json',
-				'categories[]' : $("input:checkbox:first").val()
+				'categories[]' : $("input:checkbox:first").val(),
+				'location' : $('input:radio:checked').val()
 			};
 			loadMarkers(request);
 		}, 1000);
 	});
 
-	$(document).on('click', 'input:checkbox', function () {
+	$(document).on('click', 'form input', function () {
 		// Instantiate request object
 		var request = {
 			'option': 'com_mapnavigator',
-			'format': 'json'
+			'format': 'json',
+			'location' : $('input:radio:checked').val()
 		};
 
 		// Append categories of checked boxed to request object
 		request.categories = [];
 		$('input.filters:checked').each(function (i) {
-			request.categories[i] = $(this).attr('value');
+			request.categories[i] = $(this).val();
 		});
 
 		loadMarkers(request);
@@ -211,6 +213,8 @@ function deleteMarkers() {
 				var markers = eval('(' + response + ')');
 				for (var key in markers) {
 					if (markers.hasOwnProperty(key)) {
+
+						console.log(markers[key].test);
 
 						// Append image to introtext if item has an image defined
 						if (markers[key].hasOwnProperty("image")) {
