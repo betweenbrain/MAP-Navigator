@@ -188,7 +188,8 @@ function deleteMarkers() {
 		var request = {
 			'option'  : 'com_mapnavigator',
 			'format'  : 'json',
-			'location': $('input:radio:checked').val()
+			'location': $('input[name=location]:checked').val(),
+			'region'  : $('input[name=region]:checked').val()
 		};
 
 		// Append categories of checked boxed to request object

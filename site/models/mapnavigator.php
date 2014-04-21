@@ -72,6 +72,13 @@ class MapnavigatorModelMapnavigator extends JModel
 		return $this->setUniversalFields($this->db->loadObjectList());
 	}
 
+	/**
+	 * Get all sub-categories of primary category
+	 *
+	 * @param $primaryCategory
+	 *
+	 * @return mixed
+	 */
 	function getCategories($primaryCategory)
 	{
 		$query = ' SELECT ' .
@@ -86,6 +93,11 @@ class MapnavigatorModelMapnavigator extends JModel
 		return $this->db->loadObjectList();
 	}
 
+	/**
+	 * @param $regionCategories
+	 *
+	 * @return mixed
+	 */
 	function getRegionCategories($regionCategories)
 	{
 		$query = ' SELECT ' .
@@ -112,6 +124,12 @@ class MapnavigatorModelMapnavigator extends JModel
 
 		foreach ($items as $item)
 		{
+			// Filter by region
+			if (JRequest::getVar('region') != '' && !in_array(JRequest::getVar('region'), explode(',', $item->categories)))
+			{
+				continue;
+			}
+
 			foreach (json_decode($item->locations, true) as $type => $locales)
 			{
 				// Filter locations by type if belonging to the designated category
