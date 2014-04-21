@@ -34,7 +34,7 @@ $params = & JComponentHelper::getParams('com_mapnavigator');
 	</form>
 	<form>
 		<label>
-			<input type="radio" name="region" class="global" value="">Global
+			<input type="radio" name="region" class="global" value="" checked>Global
 		</label>
 		<?php foreach ($this->regions as $region) : ?>
 			<label>
