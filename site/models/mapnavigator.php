@@ -128,7 +128,6 @@ class MapnavigatorModelMapnavigator extends JModel
 					$markers[$key]['lng']   = $data['lng'];
 					$markers[$key]['info']  = $item->introtext;
 					$markers[$key]['title'] = $item->title;
-					$markers[$key]['test']  = JRequest::getVar('location');
 
 					if (array_key_exists('itemImage', $item->universalFields))
 					{
