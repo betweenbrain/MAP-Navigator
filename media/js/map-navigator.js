@@ -81,6 +81,14 @@ function addMarker(location, title, info, type) {
 	});
 
 	google.maps.event.addListener(marker, 'click', function () {
+		// Expand sidebar text when clicking marker
+		(function ($) {
+			$('#' + marker.__gm_id).next('.hidden').toggle(function () {
+				$('.hidden:visible').not(this).hide();
+			});
+		})(jQuery)
+
+		// Set and display infowindow 
 		infoWnd.setContent(title + '<img src="http://media.guggenheim.org/map-navigator/' + type + '.png"/>');
 		infoWnd.open(map, marker);
 	});
