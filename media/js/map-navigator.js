@@ -105,8 +105,6 @@ function addMarker(location, title, info, type) {
 	// Push new marker
 	markers.push(marker);
 
-	//markerCluster.addMarkers(markers);
-
 	// Push new boundaries
 	map.fitBounds(bounds);
 
@@ -168,36 +166,6 @@ function createSidebarElement(marker, info) {
 	});
 }
 
-function removeSidebarElements() {
-	var myNode = document.getElementById('sidebar');
-	while (myNode.firstChild) {
-		myNode.removeChild(myNode.firstChild);
-	}
-}
-
-// Sets the map on all markers in the array.
-function setAllMap(map) {
-	for (var i = 0; i < markers.length; i++) {
-		markers[i].setMap(map);
-	}
-}
-
-// Removes the markers from the map, but keeps them in the array.
-function clearMarkers() {
-	setAllMap(null);
-}
-
-// Shows any markers currently in the array.
-function showMarkers() {
-	setAllMap(map);
-}
-
-// Deletes all markers in the array by removing references to them.
-function deleteMarkers() {
-	setAllMap(null);
-	markers = [];
-}
-
 // Load markers via Ajax
 (function ($) {
 
@@ -236,14 +204,33 @@ function deleteMarkers() {
 	function loadMarkers(request) {
 		// Create new bounds object when loading new markers
 		bounds = new google.maps.LatLngBounds();
+
 		$.ajax({
 			type   : 'POST',
 			data   : request,
 			format : 'json',
 			success: function (response) {
-				deleteMarkers();
-				removeSidebarElements();
+
+				// Clear existing clusters
+				markerCluster.clearMarkers();
+
+				// Clear existing markers array
+				for (var i = 0; i < markers.length; i++) {
+					markers[i].setMap(null);
+				}
+
+				// Initialize new, empty markers array
+				markers = [];
+
+				// Clear sidebar elements
+				var sidebar = document.getElementById('sidebar');
+				while (sidebar.firstChild) {
+					sidebar.removeChild(sidebar.firstChild);
+				}
+
 				var locations = eval('(' + response + ')');
+
+				// Create markers array
 				for (var key in locations) {
 					if (locations.hasOwnProperty(key)) {
 
@@ -257,6 +244,8 @@ function deleteMarkers() {
 						addMarker(location, locations[key].title, locations[key].info, locations[key].type);
 					}
 				}
+
+				// Add new marker clusters now that we've created the markers array
 				markerCluster.addMarkers(markers);
 			}
 		});
