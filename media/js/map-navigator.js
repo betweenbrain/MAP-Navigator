@@ -22,6 +22,25 @@ window.onload = loadScript;
 // Global vars
 var bounds, infoWnd, map, markerCluster, mapZoom;
 var markers = [];
+// Set style options for marker clusters (ordered according to increasing cluster size, smallest first)
+var mcOptions = {styles: [
+	{
+		height   : 28,
+		width    : 28,
+		textColor: '#8a2b87',
+		textSize : 12,
+		url      : "http://media.guggenheim.org/map-navigator/cluster.png"
+	},
+	{
+		height   : 28,
+		width    : 28,
+		textColor: '#ff0000',
+		textSize : 24,
+		url      : "http://media.guggenheim.org/map-navigator/cluster.png"
+	}
+]};
+
+
 function initialize() {
 	infoWnd = new google.maps.InfoWindow();
 	var mapOptions = {
@@ -30,7 +49,8 @@ function initialize() {
 		mapTypeId: 'roadmap'
 	};
 	map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-	markerCluster = new MarkerClusterer(map);
+
+	markerCluster = new MarkerClusterer(map, markers, mcOptions);
 
 	var styles = [
 		{
