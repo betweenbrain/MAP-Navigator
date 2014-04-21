@@ -64,6 +64,13 @@ class MapnavigatorModelMapnavigator extends JModel
 		return $this->setUniversalFields($this->db->loadObjectList());
 	}
 
+	/**
+	 * Returns a list of the child categories of the primary category
+	 *
+	 * @param $primaryCategory
+	 *
+	 * @return mixed
+	 */
 	function getCategories($primaryCategory)
 	{
 		$query = ' SELECT ' .
@@ -71,6 +78,27 @@ class MapnavigatorModelMapnavigator extends JModel
 			$this->db->nameQuote('name') .
 			' FROM ' . $this->db->nameQuote('#__k2_categories') .
 			' WHERE ' . $this->db->nameQuote('parent') . ' = ' . $this->db->quote($primaryCategory) .
+			' AND ' . $this->db->nameQuote('published') . ' = ' . $this->db->quote('1');
+
+		$this->db->setQuery($query);
+
+		return $this->db->loadObjectList();
+	}
+
+	/**
+	 * Retrieves the Region Categories used for filtering
+	 *
+	 * @param $regionCategories
+	 *
+	 * @return mixed
+	 */
+	function getRegionCategories($regionCategories)
+	{
+		$query = ' SELECT ' .
+			$this->db->nameQuote('id') . ',' .
+			$this->db->nameQuote('name') .
+			' FROM ' . $this->db->nameQuote('#__k2_categories') .
+			' WHERE ' . $this->db->nameQuote('id') . ' IN (' . implode(',', $regionCategories) . ')' .
 			' AND ' . $this->db->nameQuote('published') . ' = ' . $this->db->quote('1');
 
 		$this->db->setQuery($query);
