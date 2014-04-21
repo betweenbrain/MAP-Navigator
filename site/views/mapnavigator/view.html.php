@@ -45,9 +45,11 @@ class MapnavigatorViewMapnavigator extends JView
 
 		$items      = $model->getItems();
 		$categories = $model->getCategories($params->get('primaryCategory'));
+		$regions    = $model->getRegionCategories($params->get('regionCategories'));
 
 		$this->assignRef('categories', $categories);
 		$this->assignRef('items', $items);
+		$this->assignRef('regions', $regions);
 
 		parent::display($tpl);
 	}

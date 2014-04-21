@@ -21,12 +21,26 @@ $params = & JComponentHelper::getParams('com_mapnavigator');
 					</label>
 					<?php if ($category->id === $params->get('artistCategory')) : ?>
 						<br />
-						<input type="radio" name="location" value="birth">Born
-						<input type="radio" name="location" value="primary" checked>Works
+						<label>
+							<input type="radio" name="location" value="birth">Born
+						</label>
+						<label>
+							<input type="radio" name="location" value="primary" checked>Works
+						</label>
 					<?php endif ?>
 				</li>
 			<?php endforeach ?>
 		</ul>
+	</form>
+	<form>
+		<label>
+			<input type="radio" name="region" class="global" value="">Global
+		</label>
+		<?php foreach ($this->regions as $region) : ?>
+			<label>
+				<input type="radio" name="region" class="global" value="<?php echo $region->id ?>"><?php echo $region->name ?>
+			</label>
+		<?php endforeach ?>
 	</form>
 </section>
 
