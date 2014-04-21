@@ -88,7 +88,7 @@ function addMarker(location, title, info, type) {
 			});
 		})(jQuery)
 
-		// Set and display infowindow 
+		// Set and display infowindow
 		infoWnd.setContent(title + '<img src="http://media.guggenheim.org/map-navigator/' + type + '.png"/>');
 		infoWnd.open(map, marker);
 	});
@@ -169,13 +169,6 @@ function deleteMarkers() {
 
 // Load markers via Ajax
 (function ($) {
-
-	// Toggle next hidden div and close all others that are visible
-	$(document).on('click', 'a.toggle', function () {
-		$(this).next('.hidden').toggle(function () {
-			$('.hidden:visible').not(this).hide();
-		});
-	});
 
 	// Simulate clicking first element 1 second after loading page
 	$(window).bind("load", function () {
