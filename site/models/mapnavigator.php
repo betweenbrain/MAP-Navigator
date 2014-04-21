@@ -46,17 +46,25 @@ class MapnavigatorModelMapnavigator extends JModel
 			$this->db->nameQuote('k2.plugins') . ',' .
 			$this->db->nameQuote('cats.catid') . ',' .
 			$this->db->nameQuote('loc.locations') . ',' .
+
+			// Get all additional categories
 			' ( SELECT ' .
 			' GROUP_CONCAT(' . $this->db->nameQuote('cats.catid') . ')' .
 			' FROM ' . $this->db->nameQuote('#__k2_additional_categories') . ' AS ' . $this->db->nameQuote('cats') .
 			' WHERE ' . $this->db->nameQuote('k2.id') . ' = ' . $this->db->nameQuote('cats.itemId') .
 			') AS ' . $this->db->nameQuote('categories') .
+
+			// Join K2 items, K2 locations and Additonal categories tables by item ID
 			' FROM ' . $this->db->nameQuote('#__k2_items') . ' AS ' . $this->db->nameQuote('k2') .
 			' JOIN ' . $this->db->nameQuote('#__k2_items_locations') . ' AS ' . $this->db->nameQuote('loc') .
 			' ON (' . $this->db->nameQuote('loc.itemId') . ' = ' . $this->db->nameQuote('k2.id') . ')' .
 			' JOIN ' . $this->db->nameQuote('#__k2_additional_categories') . ' AS ' . $this->db->nameQuote('cats') .
 			' ON (' . $this->db->nameQuote('k2.id') . ' = ' . $this->db->nameQuote('cats.itemId') . ')' .
+
+			// Limit results to items that only have the correct additional categories
 			' WHERE ' . $this->db->nameQuote('cats.catid') . ' IN (' . implode(',', JRequest::getVar('categories')) . ')' .
+
+			// Published items only
 			' AND ' . $this->db->nameQuote('k2.trash') . ' = ' . $this->db->quote('0');
 
 		$this->db->setQuery($query);
