@@ -20,7 +20,7 @@ window.onload = loadScript;
 
 
 // Global vars
-var bounds, infoWnd, map, mapZoom;
+var bounds, infoWnd, map, markerCluster, mapZoom;
 var markers = [];
 function initialize() {
 	infoWnd = new google.maps.InfoWindow();
@@ -29,8 +29,8 @@ function initialize() {
 		center   : new google.maps.LatLng(0, 0),
 		mapTypeId: 'roadmap'
 	};
-	map = new google.maps.Map(document.getElementById('map-canvas'),
-		mapOptions);
+	map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+	markerCluster = new MarkerClusterer(map);
 
 	var styles = [
 		{
@@ -70,6 +70,7 @@ function addMarker(location, title, info, type) {
 	});
 
 	// Extend boundaries to fit new markers
+	// var location = new google.maps.LatLng(markers[key].lat, markers[key].lng);
 	bounds.extend(location);
 
 	google.maps.event.addListener(marker, 'mouseover', function () {
@@ -103,6 +104,9 @@ function addMarker(location, title, info, type) {
 
 	// Push new marker
 	markers.push(marker);
+
+	//markerCluster.addMarkers(markers);
+
 	// Push new boundaries
 	map.fitBounds(bounds);
 
@@ -239,20 +243,21 @@ function deleteMarkers() {
 			success: function (response) {
 				deleteMarkers();
 				removeSidebarElements();
-				var markers = eval('(' + response + ')');
-				for (var key in markers) {
-					if (markers.hasOwnProperty(key)) {
+				var locations = eval('(' + response + ')');
+				for (var key in locations) {
+					if (locations.hasOwnProperty(key)) {
 
 						// Append image to introtext if item has an image defined
-						if (markers[key].hasOwnProperty("image")) {
-							markers[key].info = '<img src="' + markers[key].image + '"/>' + markers[key].info;
+						if (locations[key].hasOwnProperty("image")) {
+							locations[key].info = '<img src="' + locations[key].image + '"/>' + locations[key].info;
 						}
 
 						// Calculate Google Maps latitude and longitude
-						var location = new google.maps.LatLng(markers[key].lat, markers[key].lng);
-						addMarker(location, markers[key].title, markers[key].info, markers[key].type);
+						var location = new google.maps.LatLng(locations[key].lat, locations[key].lng);
+						addMarker(location, locations[key].title, locations[key].info, locations[key].type);
 					}
 				}
+				markerCluster.addMarkers(markers);
 			}
 		});
 	};
