@@ -20,7 +20,7 @@ window.onload = loadScript;
 
 
 // Global vars
-var bounds, infoWnd, map;
+var bounds, infoWnd, map, mapZoom;
 var markers = [];
 function initialize() {
 	infoWnd = new google.maps.InfoWindow();
@@ -105,6 +105,33 @@ function addMarker(location, title, info, type) {
 	markers.push(marker);
 	// Push new boundaries
 	map.fitBounds(bounds);
+
+	// Offsets the MAP based on center
+	var c = map.getCenter();
+	map_recenter(c, 150, 0);
+
+	// Forces MAP to zoom out one level to accommodate bounds offset - http://stackoverflow.com/a/12531813/901680
+	google.maps.event.addListenerOnce(map, 'bounds_changed', function () {
+		if (mapZoom != map.getZoom()) {
+			mapZoom = (map.getZoom() - 1);
+			map.setZoom(mapZoom);
+		}
+	});
+}
+
+// Offsets the MAP - http://stackoverflow.com/a/10722973/901680
+function map_recenter(latlng, offsetx, offsety) {
+	var point1 = map.getProjection().fromLatLngToPoint(
+		(latlng instanceof google.maps.LatLng) ? latlng : map.getCenter()
+	);
+	var point2 = new google.maps.Point(
+		( (typeof(offsetx) == 'number' ? offsetx : 0) / Math.pow(2, map.getZoom()) ) || 0,
+		( (typeof(offsety) == 'number' ? offsety : 0) / Math.pow(2, map.getZoom()) ) || 0
+	);
+	map.setCenter(map.getProjection().fromPointToLatLng(new google.maps.Point(
+		point1.x - point2.x,
+		point1.y + point2.y
+	)));
 }
 
 function createSidebarElement(marker, info) {
@@ -216,17 +243,14 @@ function deleteMarkers() {
 				for (var key in markers) {
 					if (markers.hasOwnProperty(key)) {
 
-						console.log(markers[key].test);
-
 						// Append image to introtext if item has an image defined
 						if (markers[key].hasOwnProperty("image")) {
 							markers[key].info = '<img src="' + markers[key].image + '"/>' + markers[key].info;
 						}
 
 						// Calculate Google Maps latitude and longitude
-						var Latlng = new google.maps.LatLng(markers[key].lat, markers[key].lng);
-
-						addMarker(Latlng, markers[key].title, markers[key].info, markers[key].type);
+						var location = new google.maps.LatLng(markers[key].lat, markers[key].lng);
+						addMarker(location, markers[key].title, markers[key].info, markers[key].type);
 					}
 				}
 			}
