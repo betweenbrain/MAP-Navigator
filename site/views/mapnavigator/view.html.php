@@ -44,7 +44,7 @@ class MapnavigatorViewMapnavigator extends JView
 		$params = & JComponentHelper::getParams('com_mapnavigator');
 
 		$items      = $model->getItems();
-		$categories = $model->getCategories($params->get('primaryCategory'));
+		$categories = $model->getCategories($params->get('primaryCategory'), $params->get('regionCategories'));
 		$regions    = $model->getRegionCategories($params->get('regionCategories'));
 
 		$this->assignRef('categories', $categories);
