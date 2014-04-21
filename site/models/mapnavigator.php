@@ -64,13 +64,6 @@ class MapnavigatorModelMapnavigator extends JModel
 		return $this->setUniversalFields($this->db->loadObjectList());
 	}
 
-	/**
-	 * Returns a list of the child categories of the primary category
-	 *
-	 * @param $primaryCategory
-	 *
-	 * @return mixed
-	 */
 	function getCategories($primaryCategory)
 	{
 		$query = ' SELECT ' .
@@ -85,13 +78,6 @@ class MapnavigatorModelMapnavigator extends JModel
 		return $this->db->loadObjectList();
 	}
 
-	/**
-	 * Retrieves the Region Categories used for filtering
-	 *
-	 * @param $regionCategories
-	 *
-	 * @return mixed
-	 */
 	function getRegionCategories($regionCategories)
 	{
 		$query = ' SELECT ' .
@@ -118,53 +104,30 @@ class MapnavigatorModelMapnavigator extends JModel
 
 		foreach ($items as $item)
 		{
-			if ($item->catid === $params->get('artistCategory'))
+			foreach (json_decode($item->locations, true) as $type => $locales)
 			{
-				foreach (json_decode($item->locations, true) as $type => $locales)
+				// Filter locations by type if belonging to the designated category
+				if (($item->catid === $params->get('artistCategory')) && ($type != JRequest::getVar('location')))
 				{
-					if ($type === JRequest::getVar('location'))
-					{
-						foreach ($locales as $name => $data)
-						{
-							$markers[$key]['loc']   = $name;
-							$markers[$key]['type']  = $type;
-							$markers[$key]['lat']   = $data['lat'];
-							$markers[$key]['lng']   = $data['lng'];
-							$markers[$key]['info']  = $item->introtext;
-							$markers[$key]['title'] = $item->title;
-							$markers[$key]['test']  = JRequest::getVar('location');
-
-							if (array_key_exists('itemImage', $item->universalFields))
-							{
-								$markers[$key]['image'] = $item->universalFields->itemImage;
-							}
-
-							$key++;
-						}
-					}
+					continue;
 				}
-			}
-			else
-			{
-				foreach (json_decode($item->locations, true) as $type => $locales)
+
+				foreach ($locales as $name => $data)
 				{
-					foreach ($locales as $name => $data)
+					$markers[$key]['loc']   = $name;
+					$markers[$key]['type']  = $type;
+					$markers[$key]['lat']   = $data['lat'];
+					$markers[$key]['lng']   = $data['lng'];
+					$markers[$key]['info']  = $item->introtext;
+					$markers[$key]['title'] = $item->title;
+					$markers[$key]['test']  = JRequest::getVar('location');
+
+					if (array_key_exists('itemImage', $item->universalFields))
 					{
-						$markers[$key]['loc']   = $name;
-						$markers[$key]['type']  = $type;
-						$markers[$key]['lat']   = $data['lat'];
-						$markers[$key]['lng']   = $data['lng'];
-						$markers[$key]['info']  = $item->introtext;
-						$markers[$key]['title'] = $item->title;
-						$markers[$key]['test']  = JRequest::getVar('location');
-
-						if (array_key_exists('itemImage', $item->universalFields))
-						{
-							$markers[$key]['image'] = $item->universalFields->itemImage;
-						}
-
-						$key++;
+						$markers[$key]['image'] = $item->universalFields->itemImage;
 					}
+
+					$key++;
 				}
 			}
 		}
