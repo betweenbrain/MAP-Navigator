@@ -209,6 +209,9 @@ function addMarker(location, title, info, type) {
 	});
 
 	google.maps.event.addListener(marker, 'click', function () {
+		// Elegantly recenter MAP when clicking marker
+		map.panTo(marker.getPosition());
+
 		// Move to first of list and expand sidebar text when clicking marker
 		(function ($) {
 			$('#' + marker.__gm_id).parent().prependTo('#sidebar');
