@@ -177,13 +177,13 @@ function addMarker(location, title, info, type) {
 	bounds.extend(location);
 
 	google.maps.event.addListener(marker, 'mouseover', function () {
-
-		// Zoom based marker icons
-		if (map.getZoom() < 5) {
-			marker.setIcon(dotHover);
-		} else {
-			marker.setIcon('http://media.guggenheim.org/map-navigator/' + type + '-hover.png');
-		}
+		var image = {
+			url   : 'http://media.guggenheim.org/map-navigator/' + type + '-hover.png',
+			size  : new google.maps.Size(24, 24),
+			origin: new google.maps.Point(0, 0),
+			anchor: new google.maps.Point(12, 12)
+		};
+		marker.setIcon(image);
 	});
 
 	google.maps.event.addListener(marker, 'mouseout', function () {
