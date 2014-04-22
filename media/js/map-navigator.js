@@ -20,9 +20,10 @@ window.onload = loadScript;
 
 
 // Global vars
-var bounds, infoWnd, map, markerCluster, mapZoom;
+var bounds, infoWnd, map, markerCluster, mapZoom, purpleDot, redDot;
 var markers = [];
-// Set style options for marker clusters (ordered by increasing cluster size, smallest first)
+
+//set style options for marker clusters (ordered according to increasing cluster size, smallest first)
 var mcOptions = { styles: [
 	{
 		height   : 28,
@@ -43,14 +44,34 @@ var mcOptions = { styles: [
 
 function initialize() {
 	infoWnd = new google.maps.InfoWindow();
+
 	var mapOptions = {
 		zoom     : 2,
 		center   : new google.maps.LatLng(0, 0),
 		mapTypeId: 'roadmap'
 	};
+
 	map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
 	markerCluster = new MarkerClusterer(map, markers, mcOptions);
+
+	purpleDot = {
+		path        : google.maps.SymbolPath.CIRCLE,
+		scale       : 2,
+		fillColor   : '#8a2b87',
+		fillOpacity : 1,
+		strokeColor : '#8a2b87',
+		strokeWeight: 2
+	};
+
+	redDot = {
+		path        : google.maps.SymbolPath.CIRCLE,
+		scale       : 2,
+		fillColor   : '#ff0000',
+		fillOpacity : 1,
+		strokeColor : '#ff0000',
+		strokeWeight: 2
+	};
 
 	var styles = [
 		{
@@ -91,11 +112,29 @@ function initialize() {
 			navigator.geolocation.getCurrentPosition(function (position) {
 				initialLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 				map.setCenter(initialLocation);
+
+				// Conditionally zoom in
+				if (map.getZoom() < 5) {
+					map.setZoom(map.getZoom() + 1);
+				}
 			});
 
 			event.preventDefault();
 		});
 	}
+
+	// Event driven zoom based marker icons
+	google.maps.event.addListener(map, 'zoom_changed', function () {
+		for (var i = 0; i < markers.length; i++) {
+			if (map.getZoom() < 5) {
+				markers[i].setIcon(purpleDot);
+			} else {
+				markers[i].setIcon('http://media.guggenheim.org/map-navigator/' + markers[i].type + '.png');
+			}
+		}
+
+
+	});
 }
 
 // Add a marker to the map and push to the array.
@@ -107,16 +146,31 @@ function addMarker(location, title, info, type) {
 		icon    : 'http://media.guggenheim.org/map-navigator/' + type + '.png'
 	});
 
+	// Add type to marker object for later reuse
+	marker.type = type;
+
 	// Extend boundaries to fit new markers
 	// var location = new google.maps.LatLng(markers[key].lat, markers[key].lng);
 	bounds.extend(location);
 
 	google.maps.event.addListener(marker, 'mouseover', function () {
-		marker.setIcon('http://media.guggenheim.org/map-navigator/' + type + '-hover.png');
+
+		// Zoom based marker icons
+		if (map.getZoom() < 5) {
+			marker.setIcon(redDot);
+		} else {
+			marker.setIcon('http://media.guggenheim.org/map-navigator/' + type + '-hover.png');
+		}
 	});
 
 	google.maps.event.addListener(marker, 'mouseout', function () {
-		marker.setIcon('http://media.guggenheim.org/map-navigator/' + type + '.png');
+
+		// Zoom based marker icons
+		if (map.getZoom() < 5) {
+			marker.setIcon(purpleDot);
+		} else {
+			marker.setIcon('http://media.guggenheim.org/map-navigator/' + type + '.png');
+		}
 	});
 
 	google.maps.event.addListener(marker, 'click', function () {
@@ -146,7 +200,6 @@ function addMarker(location, title, info, type) {
 	// Push new boundaries
 	map.fitBounds(bounds);
 
-	// Offsets the MAP based on center
 	/*
 	var c = map.getCenter();
 	map_recenter(c, 150, 0);
@@ -210,7 +263,6 @@ function createSidebarElement(marker, info) {
 
 // Load markers via Ajax
 (function ($) {
-
 	// Simulate clicking first element 1 second after loading page
 	$(window).bind("load", function () {
 		setTimeout(function () {
