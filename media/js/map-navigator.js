@@ -22,8 +22,8 @@ window.onload = loadScript;
 // Global vars
 var bounds, infoWnd, map, markerCluster, mapZoom;
 var markers = [];
-// Set style options for marker clusters (ordered according to increasing cluster size, smallest first)
-var mcOptions = {styles: [
+//set style options for marker clusters (ordered according to increasing cluster size, smallest first)
+var mcOptions = { styles: [
 	{
 		height   : 28,
 		width    : 28,
@@ -129,6 +129,7 @@ function addMarker(location, title, info, type) {
 	map.fitBounds(bounds);
 
 	// Offsets the MAP based on center
+	/*
 	var c = map.getCenter();
 	map_recenter(c, 150, 0);
 
@@ -139,9 +140,11 @@ function addMarker(location, title, info, type) {
 			map.setZoom(mapZoom);
 		}
 	});
+	*/
 }
 
 // Offsets the MAP - http://stackoverflow.com/a/10722973/901680
+/*
 function map_recenter(latlng, offsetx, offsety) {
 	var point1 = map.getProjection().fromLatLngToPoint(
 		(latlng instanceof google.maps.LatLng) ? latlng : map.getCenter()
@@ -155,6 +158,7 @@ function map_recenter(latlng, offsetx, offsety) {
 		point1.y + point2.y
 	)));
 }
+*/
 
 function createSidebarElement(marker, info) {
 	//Creates a sidebar button
