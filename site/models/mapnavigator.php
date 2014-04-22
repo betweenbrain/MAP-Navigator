@@ -103,7 +103,8 @@ class MapnavigatorModelMapnavigator extends JModel
 	{
 		$query = ' SELECT ' .
 			$this->db->nameQuote('id') . ',' .
-			$this->db->nameQuote('name') .
+			$this->db->nameQuote('name') . ',' .
+			$this->db->nameQuote('alias') .
 			' FROM ' . $this->db->nameQuote('#__k2_categories') .
 			' WHERE ' . $this->db->nameQuote('id') . ' IN (' . implode(',', $regionCategories) . ')' .
 			' AND ' . $this->db->nameQuote('published') . ' = ' . $this->db->quote('1');

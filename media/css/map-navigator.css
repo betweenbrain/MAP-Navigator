@@ -116,14 +116,14 @@ button {
 	background-image : url("http://media.guggenheim.org/map-navigator/globe.png");
 }
 
-#toolbar .south-a-southeast-asia {
+#toolbar .sseasia {
 	background-image : url("http://media.guggenheim.org/map-navigator/sseasia.png");
 }
 
-#toolbar .latin-america {
+#toolbar .latin {
 	background-image : url("http://media.guggenheim.org/map-navigator/latin.png");
 }
 
-#toolbar .africa-a-middle-east {
+#toolbar .africa {
 	background-image : url("http://media.guggenheim.org/map-navigator/africa.png");
 }
