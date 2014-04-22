@@ -22,7 +22,7 @@ window.onload = loadScript;
 // Global vars
 var bounds, infoWnd, map, markerCluster, mapZoom;
 var markers = [];
-//set style options for marker clusters (ordered according to increasing cluster size, smallest first)
+// Set style options for marker clusters (ordered by increasing cluster size, smallest first)
 var mcOptions = { styles: [
 	{
 		height   : 28,
@@ -78,6 +78,24 @@ function initialize() {
 	];
 
 	map.setOptions({styles: styles});
+
+	// Adds My Location button is geolocation is supported by the browser
+	if (navigator.geolocation) {
+
+		var toolbar = document.getElementById('toolbar');
+		var button = document.createElement('button');
+		button.innerHTML = 'My Location';
+		toolbar.appendChild(button);
+
+		button.addEventListener("click", function (event) {
+			navigator.geolocation.getCurrentPosition(function (position) {
+				initialLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+				map.setCenter(initialLocation);
+			});
+
+			event.preventDefault();
+		});
+	}
 }
 
 // Add a marker to the map and push to the array.
