@@ -12,7 +12,7 @@ $params = & JComponentHelper::getParams('com_mapnavigator');
 ?>
 <section class="map-navigator">
 	<ul id="sidebar"></ul>
-	<form>
+	<form id="filters">
 		<ul>
 			<?php foreach ($this->categories as $category) : ?>
 				<li>
@@ -32,16 +32,15 @@ $params = & JComponentHelper::getParams('com_mapnavigator');
 			<?php endforeach ?>
 		</ul>
 	</form>
-	<form>
+<form id="toolbar">
+	<label>
+		<input type="radio" name="region" class="global" value="">Global
+	</label>
+	<?php foreach ($this->regions as $region) : ?>
 		<label>
-			<input type="radio" name="region" class="global" value="" checked>Global
+			<input type="radio" name="region" class="global" value="<?php echo $region->id ?>"><?php echo $region->name ?>
 		</label>
-		<?php foreach ($this->regions as $region) : ?>
-			<label>
-				<input type="radio" name="region" class="global" value="<?php echo $region->id ?>"><?php echo $region->name ?>
-			</label>
-		<?php endforeach ?>
-	</form>
+	<?php endforeach ?>
+</form>
 </section>
-
 <div id="map-canvas"></div>
