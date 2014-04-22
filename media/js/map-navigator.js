@@ -221,37 +221,7 @@ function addMarker(location, title, info, type) {
 
 	// Push new boundaries
 	map.fitBounds(bounds);
-
-	/*
-	var c = map.getCenter();
-	map_recenter(c, 150, 0);
-
-	// Forces MAP to zoom out one level to accommodate bounds offset - http://stackoverflow.com/a/12531813/901680
-	google.maps.event.addListenerOnce(map, 'bounds_changed', function () {
-		if (mapZoom != map.getZoom()) {
-			mapZoom = (map.getZoom() - 1);
-			map.setZoom(mapZoom);
-		}
-	});
-	*/
 }
-
-// Offsets the MAP - http://stackoverflow.com/a/10722973/901680
-/*
-function map_recenter(latlng, offsetx, offsety) {
-	var point1 = map.getProjection().fromLatLngToPoint(
-		(latlng instanceof google.maps.LatLng) ? latlng : map.getCenter()
-	);
-	var point2 = new google.maps.Point(
-		( (typeof(offsetx) == 'number' ? offsetx : 0) / Math.pow(2, map.getZoom()) ) || 0,
-		( (typeof(offsety) == 'number' ? offsety : 0) / Math.pow(2, map.getZoom()) ) || 0
-	);
-	map.setCenter(map.getProjection().fromPointToLatLng(new google.maps.Point(
-		point1.x - point2.x,
-		point1.y + point2.y
-	)));
-}
-*/
 
 function createSidebarElement(marker, info) {
 	//Creates a sidebar button
