@@ -122,6 +122,27 @@ function initialize() {
 
 			event.preventDefault();
 		});
+
+		// Adds custom zoom buttons
+		var button = document.createElement('button');
+		button.className = 'zoom in';
+		button.innerHTML = 'Zoom In';
+		toolbar.appendChild(button);
+
+		button.addEventListener("click", function (event) {
+			map.setZoom(map.getZoom() + 1);
+			event.preventDefault();
+		});
+
+		var button = document.createElement('button');
+		button.className = 'zoom out';
+		button.innerHTML = 'Zoom Out';
+		toolbar.appendChild(button);
+
+		button.addEventListener("click", function (event) {
+			map.setZoom(map.getZoom() - 1);
+			event.preventDefault();
+		});
 	}
 
 	// Event driven zoom based marker icons
