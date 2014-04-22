@@ -48,7 +48,8 @@ function initialize() {
 	var mapOptions = {
 		zoom     : 2,
 		center   : new google.maps.LatLng(0, 0),
-		mapTypeId: 'roadmap'
+		mapTypeId: 'roadmap',
+		disableDefaultUI: true
 	};
 
 	map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
