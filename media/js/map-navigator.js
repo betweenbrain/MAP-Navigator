@@ -274,7 +274,7 @@ function createSidebarElement(marker, info) {
 				'location'    : $('input:radio:checked').val()
 			};
 			loadMarkers(request);
-		}, 1000);
+		}, 1500);
 	});
 
 	$(document).on('click', 'form input', function () {
