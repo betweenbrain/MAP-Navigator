@@ -12,6 +12,7 @@
 .map-navigator {
 	position : absolute;
 	width    : 902px;
+	left     : 25%;
 
 	/*
 	position           : absolute;
@@ -63,8 +64,8 @@
 	z-index  : 1;
 }
 
-#toolbar label, #toolbar button{
-	display: block;
+#toolbar label, #toolbar button {
+	display : block;
 }
 
 .gm-style-iw {

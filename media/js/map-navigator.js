@@ -46,9 +46,11 @@ function initialize() {
 	infoWnd = new google.maps.InfoWindow();
 
 	var mapOptions = {
-		zoom     : 2,
-		center   : new google.maps.LatLng(0, 0),
-		mapTypeId: 'roadmap',
+		zoom            : 2,
+		maxZoom         : 8,
+		minZoom         : 2,
+		center          : new google.maps.LatLng(0, 0),
+		mapTypeId       : 'roadmap',
 		disableDefaultUI: true
 	};
 
