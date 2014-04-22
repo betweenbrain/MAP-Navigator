@@ -20,7 +20,7 @@ window.onload = loadScript;
 
 
 // Global vars
-var bounds, infoWnd, map, markerCluster, mapZoom, purpleDot, redDot;
+var bounds, infoWnd, map, markerCluster, mapZoom, dot, dotHover;
 var markers = [];
 
 //set style options for marker clusters (ordered according to increasing cluster size, smallest first)
@@ -58,7 +58,7 @@ function initialize() {
 
 	markerCluster = new MarkerClusterer(map, markers, mcOptions);
 
-	purpleDot = {
+	dot = {
 		path        : google.maps.SymbolPath.CIRCLE,
 		scale       : 2,
 		fillColor   : '#8a2b87',
@@ -67,7 +67,7 @@ function initialize() {
 		strokeWeight: 2
 	};
 
-	redDot = {
+	dotHover = {
 		path        : google.maps.SymbolPath.CIRCLE,
 		scale       : 2,
 		fillColor   : '#ff0000',
@@ -108,7 +108,7 @@ function initialize() {
 
 		var toolbar = document.getElementById('toolbar');
 		var button = document.createElement('button');
-		button.innerHTML = 'My Location';
+		button.innerHTML = '<img src="http://media.guggenheim.org/map-navigator/home.png" />';
 		toolbar.appendChild(button);
 
 		button.addEventListener("click", function (event) {
@@ -128,7 +128,7 @@ function initialize() {
 		// Adds custom zoom buttons
 		var button = document.createElement('button');
 		button.className = 'zoom in';
-		button.innerHTML = 'Zoom In';
+		button.innerHTML = '<img src="http://media.guggenheim.org/map-navigator/plus.png" />';
 		toolbar.appendChild(button);
 
 		button.addEventListener("click", function (event) {
@@ -138,7 +138,7 @@ function initialize() {
 
 		var button = document.createElement('button');
 		button.className = 'zoom out';
-		button.innerHTML = 'Zoom Out';
+		button.innerHTML = '<img src="http://media.guggenheim.org/map-navigator/minus.png" />';
 		toolbar.appendChild(button);
 
 		button.addEventListener("click", function (event) {
@@ -151,15 +151,14 @@ function initialize() {
 	google.maps.event.addListener(map, 'zoom_changed', function () {
 		for (var i = 0; i < markers.length; i++) {
 			if (map.getZoom() < 5) {
-				markers[i].setIcon(purpleDot);
+				markers[i].setIcon(dot);
 			} else {
 				markers[i].setIcon('http://media.guggenheim.org/map-navigator/' + markers[i].type + '.png');
 			}
 		}
-
-
 	});
 }
+
 
 // Add a marker to the map and push to the array.
 function addMarker(location, title, info, type) {
@@ -181,7 +180,7 @@ function addMarker(location, title, info, type) {
 
 		// Zoom based marker icons
 		if (map.getZoom() < 5) {
-			marker.setIcon(redDot);
+			marker.setIcon(dotHover);
 		} else {
 			marker.setIcon('http://media.guggenheim.org/map-navigator/' + type + '-hover.png');
 		}
@@ -191,7 +190,7 @@ function addMarker(location, title, info, type) {
 
 		// Zoom based marker icons
 		if (map.getZoom() < 5) {
-			marker.setIcon(purpleDot);
+			marker.setIcon(dot);
 		} else {
 			marker.setIcon('http://media.guggenheim.org/map-navigator/' + type + '.png');
 		}
@@ -200,6 +199,7 @@ function addMarker(location, title, info, type) {
 	google.maps.event.addListener(marker, 'click', function () {
 		// Expand sidebar text when clicking marker
 		(function ($) {
+			$('#' + marker.__gm_id).clone().insertBefore().parent();
 			$('#' + marker.__gm_id).next('.hidden').toggle(function () {
 				$('.hidden:visible').not(this).hide();
 			});

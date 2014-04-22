@@ -12,7 +12,6 @@
 .map-navigator {
 	position : absolute;
 	width    : 902px;
-	left     : 25%;
 
 	/*
 	position           : absolute;
@@ -46,7 +45,7 @@
 	height     : 150px;
 	width      : 300px;
 	overflow-y : auto;
-	left       : 1em;
+	left       : 5em;
 	z-index    : 1;
 }
 
@@ -54,7 +53,7 @@
 	position : relative;
 	float    : left;
 	clear    : left;
-	left     : 1em;
+	left     : 5em;
 	z-index  : 1;
 }
 
@@ -66,6 +65,7 @@
 
 #toolbar label, #toolbar button {
 	display : block;
+	border           : 1px solid #999;
 }
 
 .gm-style-iw {
@@ -76,4 +76,54 @@
 	-moz-box-shadow    : 1px 1px 3px #888;
 	-webkit-box-shadow : 3px 3px 5px #888;
 	box-shadow         : 3px 3px 5px #888;
+}
+
+button {
+	/*background-image: url(/images/buttons/add.png); /* 16px x 16px */
+	background-color : transparent; /* make the button transparent */
+	/*background-repeat: no-repeat;  /* make the background image appear only once */
+	/*background-position: 0px 0px;  /* equivalent to 'top left' */
+	padding          : 0;
+	margin           : 0;
+	cursor           : pointer; /* make the cursor like hovering over an <a> element */
+	height           : 34px; /* make this the size of your image */
+	/*padding-left     : 34px; /* make text start to the right of the image */
+	vertical-align   : middle; /* align the text vertically centered */
+}
+
+#toolbar input {
+	margin             : 0;
+	padding            : 0;
+	-webkit-appearance : none;
+	-moz-appearance    : none;
+	appearance         : none;
+	width              : 34px;
+	height             : 34px;
+}
+
+#toolbar label {
+	text-indent        : 100%;
+	white-space        : nowrap;
+	overflow           : hidden;
+	width              : 34px;
+	height             : 34px;
+	cursor             : pointer;
+	background-size    : contain;
+	background-repeat  : no-repeat;
+}
+
+#toolbar .global {
+	background-image : url("http://media.guggenheim.org/map-navigator/globe.png");
+}
+
+#toolbar .south-a-southeast-asia {
+	background-image : url("http://media.guggenheim.org/map-navigator/sseasia.png");
+}
+
+#toolbar .latin-america {
+	background-image : url("http://media.guggenheim.org/map-navigator/latin.png");
+}
+
+#toolbar .africa-a-middle-east {
+	background-image : url("http://media.guggenheim.org/map-navigator/africa.png");
 }

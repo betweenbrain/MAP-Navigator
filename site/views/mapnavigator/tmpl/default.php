@@ -8,6 +8,24 @@
  * Copyright  Copyright (C) 2014 betweenbrain llc. All Rights Reserved.
  * License    GNU GPL v2 or later
  */
+// TODO: http://docs.joomla.org/API15:JFilterOutput/stringURLSafe breaks for some odd reason
+function stringURLSafe($string)
+{
+	//remove any '-' from the string they will be used as concatonater
+	$str = str_replace('-', ' ', $string);
+
+	$lang =& JFactory::getLanguage();
+	$str  = $lang->transliterate($str);
+
+	// remove any duplicate whitespace, and ensure all characters are alphanumeric
+	$str = preg_replace(array('/\s+/', '/[^A-Za-z0-9\-]/'), array('-', ''), $str);
+
+	// lowercase and trim
+	$str = trim(strtolower($str));
+
+	return $str;
+}
+
 $params = & JComponentHelper::getParams('com_mapnavigator');
 ?>
 <section class="map-navigator">
@@ -32,15 +50,15 @@ $params = & JComponentHelper::getParams('com_mapnavigator');
 			<?php endforeach ?>
 		</ul>
 	</form>
-<form id="toolbar">
-	<label>
-		<input type="radio" name="region" class="global" value="">Global
-	</label>
-	<?php foreach ($this->regions as $region) : ?>
-		<label>
-			<input type="radio" name="region" class="global" value="<?php echo $region->id ?>"><?php echo $region->name ?>
+	<form id="toolbar">
+		<label class="global">
+			<input type="radio" name="region" value="">Global
 		</label>
-	<?php endforeach ?>
-</form>
+		<?php foreach ($this->regions as $region) : ?>
+			<label class="<?php echo stringURLSafe($region->name) ?>">
+				<input type="radio" name="region" value="<?php echo $region->id ?>"><?php echo $region->name ?>
+			</label>
+		<?php endforeach ?>
+	</form>
 </section>
 <div id="map-canvas"></div>
