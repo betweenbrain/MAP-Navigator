@@ -197,9 +197,9 @@ function addMarker(location, title, info, type) {
 	});
 
 	google.maps.event.addListener(marker, 'click', function () {
-		// Expand sidebar text when clicking marker
+		// Move to first of list and expand sidebar text when clicking marker
 		(function ($) {
-			$('#' + marker.__gm_id).clone().insertBefore().parent();
+			$('#' + marker.__gm_id).parent().prependTo('#sidebar');
 			$('#' + marker.__gm_id).next('.hidden').toggle(function () {
 				$('.hidden:visible').not(this).hide();
 			});
