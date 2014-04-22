@@ -299,42 +299,45 @@ function createSidebarElement(marker, info) {
 			format : 'json',
 			success: function (response) {
 
-				// Clear existing clusters
-				markerCluster.clearMarkers();
+				if (response.length > 4) {
 
-				// Clear existing markers array
-				for (var i = 0; i < markers.length; i++) {
-					markers[i].setMap(null);
-				}
+					// Clear existing clusters
+					markerCluster.clearMarkers();
 
-				// Initialize new, empty markers array
-				markers = [];
-
-				// Clear sidebar elements
-				var sidebar = document.getElementById('sidebar');
-				while (sidebar.firstChild) {
-					sidebar.removeChild(sidebar.firstChild);
-				}
-
-				var locations = eval('(' + response + ')');
-
-				// Create markers array
-				for (var key in locations) {
-					if (locations.hasOwnProperty(key)) {
-
-						// Append image to introtext if item has an image defined
-						if (locations[key].hasOwnProperty("image")) {
-							locations[key].info = '<img src="' + locations[key].image + '"/>' + locations[key].info;
-						}
-
-						// Calculate Google Maps latitude and longitude
-						var location = new google.maps.LatLng(locations[key].lat, locations[key].lng);
-						addMarker(location, locations[key].title, locations[key].info, locations[key].type);
+					// Clear existing markers array
+					for (var i = 0; i < markers.length; i++) {
+						markers[i].setMap(null);
 					}
-				}
 
-				// Add new marker clusters now that we've created the markers array
-				markerCluster.addMarkers(markers);
+					// Initialize new, empty markers array
+					markers = [];
+
+					// Clear sidebar elements
+					var sidebar = document.getElementById('sidebar');
+					while (sidebar.firstChild) {
+						sidebar.removeChild(sidebar.firstChild);
+					}
+
+					var locations = eval('(' + response + ')');
+
+					// Create markers array
+					for (var key in locations) {
+						if (locations.hasOwnProperty(key)) {
+
+							// Append image to introtext if item has an image defined
+							if (locations[key].hasOwnProperty("image")) {
+								locations[key].info = '<img src="' + locations[key].image + '"/>' + locations[key].info;
+							}
+
+							// Calculate Google Maps latitude and longitude
+							var location = new google.maps.LatLng(locations[key].lat, locations[key].lng);
+							addMarker(location, locations[key].title, locations[key].info, locations[key].type);
+						}
+					}
+
+					// Add new marker clusters now that we've created the markers array
+					markerCluster.addMarkers(markers);
+				}
 			}
 		});
 	};
