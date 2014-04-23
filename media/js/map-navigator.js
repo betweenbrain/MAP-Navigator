@@ -168,16 +168,11 @@ function initialize() {
 // Add a marker to the map and push to the array.
 function addMarker(location, title, info, type) {
 
-	// Offsets some overlapping markers - http://stackoverflow.com/a/9143850/901680
-	/*
-	var lng_radius = 0.0003,         // degrees of longitude separation
+	// Modified from http://stackoverflow.com/a/9143850/901680
+	var lng_radius = 0.00007,         // degrees of longitude separation
 		lat_to_lng = 111.23 / 71.7,  // lat to long proportion in Warsaw
-		angle = 0.5,                 // starting angle, in radians
-		loclen = markers.length,
-		step = 2 * Math.PI / loclen,
-		lat_radius = lng_radius / lat_to_lng,
-		finalLatLng = location;
-
+		angle = 0.25,                 // starting angle, in radians
+		lat_radius = lng_radius / lat_to_lng;
 
 	for (i = 0; i < markers.length; i++) {
 		var pos = markers[i].getPosition();
@@ -187,27 +182,10 @@ function addMarker(location, title, info, type) {
 			var lat = location.A + (Math.cos(angle) * lng_radius);
 			var lng = location.k + (Math.sin(angle) * lat_radius);
 
-			angle += step;
-
-			finalLatLng = new google.maps.LatLng(lng, lat);
-
-		}
-	}
-	*/
-
-	// Somewhat reliable randomization of overlapping markers
-	var min = 0.00003,
-		max = 0.0003;
-
-	for (i = 0; i < markers.length; i++) {
-		var pos = markers[i].getPosition();
-
-		if (location.equals(pos)) {
-
-			var lat = location.A + (Math.random() * (max - min) + min);
-			var lng = location.k + (Math.random() * (max - min) + min);
+			angle += 2 * Math.PI / i;
 
 			location = new google.maps.LatLng(lng, lat);
+
 		}
 	}
 
