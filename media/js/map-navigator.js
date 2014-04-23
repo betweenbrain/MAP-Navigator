@@ -20,7 +20,7 @@ window.onload = loadScript;
 
 
 // Global vars
-var bounds, infoWnd, map, markerCluster, mapZoom, dot, dotHover;
+var bounds, i, infoWnd, map, markerCluster, mapZoom, dot, dotHover;
 var markers = [];
 
 //set style options for marker clusters (ordered according to increasing cluster size, smallest first)
@@ -149,7 +149,7 @@ function initialize() {
 
 	// Event driven zoom based marker icons
 	google.maps.event.addListener(map, 'zoom_changed', function () {
-		for (var i = 0; i < markers.length; i++) {
+		for (i = 0; i < markers.length; i++) {
 			if (map.getZoom() < 5) {
 				markers[i].setIcon(dot);
 			} else {
@@ -254,7 +254,7 @@ function createSidebarElement(marker, info) {
 	});
 
 	google.maps.event.addDomListener(li, 'mouseover', function () {
-		for (var i = 0; i < markers.length; i++) {
+		for (i = 0; i < markers.length; i++) {
 			if (markers[i].title === title) {
 				google.maps.event.trigger(markers[i], 'mouseover');
 			}
@@ -262,7 +262,7 @@ function createSidebarElement(marker, info) {
 	});
 
 	google.maps.event.addDomListener(li, 'mouseout', function () {
-		for (var i = 0; i < markers.length; i++) {
+		for (i = 0; i < markers.length; i++) {
 			if (markers[i].title === title) {
 				google.maps.event.trigger(markers[i], 'mouseout');
 			}
@@ -320,7 +320,7 @@ function createSidebarElement(marker, info) {
 					markerCluster.clearMarkers();
 
 					// Clear existing markers array
-					for (var i = 0; i < markers.length; i++) {
+					for (i = 0; i < markers.length; i++) {
 						markers[i].setMap(null);
 					}
 
