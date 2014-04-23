@@ -98,6 +98,15 @@ function initialize() {
 				{ color: '#888888' },
 				{ weight: 1 }
 			]
+		},
+		{
+			featureType: 'administrative.locality',
+			elementType: "labels.text.fill",
+			stylers    : [
+				{ visibility: 'simplifed' },
+				{ color: '#888888' },
+				{ weight: 1 }
+			]
 		}
 	];
 
