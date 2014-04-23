@@ -195,6 +195,22 @@ function addMarker(location, title, info, type) {
 	}
 	*/
 
+	// Somewhat reliable randomization of overlapping markers
+	var min = 0.00003,
+		max = 0.0003;
+
+	for (i = 0; i < markers.length; i++) {
+		var pos = markers[i].getPosition();
+
+		if (location.equals(pos)) {
+
+			var lat = location.A + (Math.random() * (max - min) + min);
+			var lng = location.k + (Math.random() * (max - min) + min);
+
+			location = new google.maps.LatLng(lng, lat);
+		}
+	}
+
 	var markerIcon = {
 		url   : 'http://media.guggenheim.org/map-navigator/' + type + '.png',
 		size  : new google.maps.Size(24, 24),
