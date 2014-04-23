@@ -168,6 +168,34 @@ function initialize() {
 
 // Add a marker to the map and push to the array.
 function addMarker(location, title, info, type) {
+
+	// Offsets some overlapping markers - http://stackoverflow.com/a/9143850/901680
+	/*
+	var lng_radius = 0.0003,         // degrees of longitude separation
+		lat_to_lng = 111.23 / 71.7,  // lat to long proportion in Warsaw
+		angle = 0.5,                 // starting angle, in radians
+		loclen = markers.length,
+		step = 2 * Math.PI / loclen,
+		lat_radius = lng_radius / lat_to_lng,
+		finalLatLng = location;
+
+
+	for (i = 0; i < markers.length; i++) {
+		var pos = markers[i].getPosition();
+
+		if (location.equals(pos)) {
+
+			var lat = location.A + (Math.cos(angle) * lng_radius);
+			var lng = location.k + (Math.sin(angle) * lat_radius);
+
+			angle += step;
+
+			finalLatLng = new google.maps.LatLng(lng, lat);
+
+		}
+	}
+	*/
+
 	var markerIcon = {
 		url   : 'http://media.guggenheim.org/map-navigator/' + type + '.png',
 		size  : new google.maps.Size(24, 24),
