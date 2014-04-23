@@ -84,18 +84,19 @@ function initialize() {
 			]
 		},
 		{
-			featureType: 'landscape',
-			stylers    : [
-				{ visibility: 'on' },
-				{ color: '#999' }
-
-			]
-		},
-		{
 			featureType: 'water',
 			stylers    : [
 				{ visibility: 'on' },
 				{ color: '#ffffff' }
+			]
+		},
+		{
+			featureType: 'administrative.country',
+			elementType: "labels.text.fill",
+			stylers    : [
+				{ visibility: 'simplifed' },
+				{ color: '#888888' },
+				{ weight: 1 }
 			]
 		}
 	];
