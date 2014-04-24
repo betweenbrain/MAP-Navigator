@@ -250,7 +250,7 @@ function initialize() {
 
 
 // Add a marker to the map and push to the array.
-function addMarker(location, alias, title, info, type) {
+function addMarker(location, object) {
 
 	// Modified from http://stackoverflow.com/a/9143850/901680
 	var lng_radius = 0.00007,         // degrees of longitude separation
@@ -274,7 +274,7 @@ function addMarker(location, alias, title, info, type) {
 	}
 
 	var markerIcon = {
-		url   : 'http://media.guggenheim.org/map-navigator/' + type + '.png',
+		url   : 'http://media.guggenheim.org/map-navigator/' + object.type + '.png',
 		size  : (24, 24),
 		origin: (0, 0),
 		anchor: (12, 12)
@@ -283,25 +283,28 @@ function addMarker(location, alias, title, info, type) {
 	var marker = new google.maps.Marker({
 		position: location,
 		map     : map,
-		title   : title,
-		icon    : markerIcon
+		title   : object.title,
+		icon    : markerIcon,
+		alias   : object.alias,
+		category: object.category,
+		type    : object.type,
+		text    : object.info
 	});
 
-	// Add type to marker object for later reuse
-	marker.type = type;
-	marker.alias = alias;
 
 	// Extend boundaries to fit new markers
 	// var location = new google.maps.LatLng(markers[key].lat, markers[key].lng);
 	bounds.extend(location);
 
 	google.maps.event.addListener(marker, 'mouseover', function () {
+
 		var markerIcon = {
-			url   : 'http://media.guggenheim.org/map-navigator/' + type + '-hover.png',
+			url   : 'http://media.guggenheim.org/map-navigator/' + marker.type + '-hover.png',
 			size  : (24, 24),
 			origin: (0, 0),
 			anchor: (12, 12)
 		};
+
 		marker.setIcon(markerIcon);
 	});
 
@@ -311,9 +314,18 @@ function addMarker(location, alias, title, info, type) {
 		if (map.getZoom() < 5) {
 			marker.setIcon(dot);
 		} else {
+
+			var markerIcon = {
+				url   : 'http://media.guggenheim.org/map-navigator/' + marker.type + '.png',
+				size  : (24, 24),
+				origin: (0, 0),
+				anchor: (12, 12)
+			};
+
 			marker.setIcon(markerIcon);
 		}
 	});
+
 
 	google.maps.event.addListener(marker, 'click', function () {
 		// Elegantly recenter MAP when clicking marker
@@ -321,24 +333,24 @@ function addMarker(location, alias, title, info, type) {
 
 		// Move to first of list and expand sidebar text when clicking marker
 		(function ($) {
-			$('.' + alias).prependTo('#sidebar');
-			$('.' + alias).find('.toggle').toggle(function () {
+			$('.' + marker.alias).prependTo('#sidebar');
+			$('.' + marker.alias).find('.toggle').toggle(function () {
 				$('.toggle:visible').not(this).hide();
 			});
 		})(jQuery)
 
 		// Set and display infowindow
-		infoWnd.setContent(title + '<img src="http://media.guggenheim.org/map-navigator/' + type + '.png"/>');
+		infoWnd.setContent(marker.title + '<img src="http://media.guggenheim.org/map-navigator/' + marker.type + '.png"/>');
 		infoWnd.open(map, marker);
 	});
 
 	// Check if marker has already been pushed to the markers title array
-	if (markers[title] !== title) {
-		createSidebarElement(marker, info);
+	if (markers[marker.title] !== marker.title) {
+		createSidebarElement(marker, marker.text);
 	}
 
 	// Push to the markers title array
-	markers[title] = title;
+	markers[marker.title] = marker.title;
 
 	// Push new marker
 	markers.push(marker);
@@ -454,7 +466,7 @@ function createSidebarElement(marker, info) {
 
 							// Calculate Google Maps latitude and longitude
 							var location = new google.maps.LatLng(locations[key].lat, locations[key].lng);
-							addMarker(location, locations[key].alias, locations[key].title, locations[key].info, locations[key].type);
+							addMarker(location, locations[key]);
 						}
 					}
 
