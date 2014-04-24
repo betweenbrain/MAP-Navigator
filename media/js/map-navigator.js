@@ -280,6 +280,13 @@ function addMarker(location, object) {
 		anchor: new google.maps.Point(12, 12)
 	};
 
+	var markerHoverIcon = {
+		url   : 'http://media.guggenheim.org/map-navigator/' + object.type + '-hover.png',
+		size  : new google.maps.Size(24, 24),
+		origin: new google.maps.Point(0, 0),
+		anchor: new google.maps.Point(12, 12)
+	};
+
 	var marker = new google.maps.Marker({
 		position: location,
 		map     : map,
@@ -297,15 +304,7 @@ function addMarker(location, object) {
 	bounds.extend(location);
 
 	google.maps.event.addListener(marker, 'mouseover', function () {
-
-		var markerIcon = {
-			url   : 'http://media.guggenheim.org/map-navigator/' + marker.type + '-hover.png',
-			size  : new google.maps.Size(24, 24),
-			origin: new google.maps.Point(0, 0),
-			anchor: new google.maps.Point(12, 12)
-		};
-
-		marker.setIcon(markerIcon);
+		marker.setIcon(markerHoverIcon);
 	});
 
 	google.maps.event.addListener(marker, 'mouseout', function () {
@@ -318,7 +317,6 @@ function addMarker(location, object) {
 			marker.setIcon(markerIcon);
 		}
 	});
-
 
 	google.maps.event.addListener(marker, 'click', function () {
 		// Elegantly recenter MAP when clicking marker
