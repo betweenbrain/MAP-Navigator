@@ -161,9 +161,9 @@ function initialize() {
 	// Custom marker cluster click event
 	google.maps.event.addListener(markerCluster, 'clusterclick', function (cluster) {
 		map.setCenter(cluster.getCenter());
-		if(map.getZoom() > 12){
+		if (map.getZoom() > 12) {
 			map.setZoom(map.getZoom() + 4);
-		} else{
+		} else {
 			map.setZoom(map.getZoom() + 7);
 		}
 	});
@@ -188,7 +188,7 @@ function initialize() {
 
 
 // Add a marker to the map and push to the array.
-function addMarker(location, title, info, type) {
+function addMarker(location, alias, title, info, type) {
 
 	// Modified from http://stackoverflow.com/a/9143850/901680
 	var lng_radius = 0.00007,         // degrees of longitude separation
@@ -226,6 +226,7 @@ function addMarker(location, title, info, type) {
 
 	// Add type to marker object for later reuse
 	marker.type = type;
+	marker.alias = alias;
 
 	// Extend boundaries to fit new markers
 	// var location = new google.maps.LatLng(markers[key].lat, markers[key].lng);
@@ -257,9 +258,9 @@ function addMarker(location, title, info, type) {
 
 		// Move to first of list and expand sidebar text when clicking marker
 		(function ($) {
-			$('#' + marker.__gm_id).parent().prependTo('#sidebar');
-			$('#' + marker.__gm_id).next('.hidden').toggle(function () {
-				$('.hidden:visible').not(this).hide();
+			$('.' + alias).prependTo('#sidebar');
+			$('.' + alias).find('.toggle').toggle(function () {
+				$('.toggle:visible').not(this).hide();
 			});
 		})(jQuery)
 
@@ -287,8 +288,9 @@ function createSidebarElement(marker, info) {
 	//Creates a sidebar button
 	var ul = document.getElementById('sidebar');
 	var li = document.createElement('li');
+	li.className = marker.alias;
 	var title = marker.getTitle();
-	li.innerHTML = '<a id="' + marker.__gm_id + '" class="toggle">' + title + '</a><div class="hidden" style="display: none">' + info + '</div>';
+	li.innerHTML = '<a>' + title + '</a><div class="toggle" style="display: none">' + info + '</div>';
 	ul.appendChild(li);
 
 	//Trigger a marker event when a sidebar item is acted on
@@ -389,7 +391,7 @@ function createSidebarElement(marker, info) {
 
 							// Calculate Google Maps latitude and longitude
 							var location = new google.maps.LatLng(locations[key].lat, locations[key].lng);
-							addMarker(location, locations[key].title, locations[key].info, locations[key].type);
+							addMarker(location, locations[key].alias, locations[key].title, locations[key].info, locations[key].type);
 						}
 					}
 
