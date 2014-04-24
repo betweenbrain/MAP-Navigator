@@ -41,6 +41,7 @@ class MapnavigatorModelMapnavigator extends JModel
 	function getItems()
 	{
 		$query = ' SELECT ' .
+			$this->db->nameQuote('k2.alias') . ',' .
 			$this->db->nameQuote('k2.title') . ',' .
 			$this->db->nameQuote('k2.introtext') . ',' .
 			$this->db->nameQuote('k2.plugins') . ',' .
@@ -148,6 +149,7 @@ class MapnavigatorModelMapnavigator extends JModel
 					$markers[$key]['lng']   = $data['lng'];
 					$markers[$key]['info']  = $item->introtext;
 					$markers[$key]['title'] = $item->title;
+					$markers[$key]['alias'] = $item->alias;
 
 					if (array_key_exists('itemImage', $item->universalFields))
 					{
