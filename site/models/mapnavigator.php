@@ -30,7 +30,8 @@ class MapnavigatorModelMapnavigator extends JModel
 	function __construct()
 	{
 		parent::__construct();
-		$this->db = JFactory::getDbo();
+		$this->db     = JFactory::getDbo();
+		$this->params = JComponentHelper::getParams('com_mapnavigator');
 	}
 
 	/**
@@ -38,7 +39,7 @@ class MapnavigatorModelMapnavigator extends JModel
 	 *
 	 * @return string The greeting to be displayed to the user
 	 */
-	function getItems()
+	function getItems($regionCategories)
 	{
 		$query = ' SELECT ' .
 			$this->db->nameQuote('k2.alias') . ',' .
@@ -52,9 +53,19 @@ class MapnavigatorModelMapnavigator extends JModel
 			' GROUP_CONCAT(' . $this->db->nameQuote('cats.catid') . ')' .
 			' FROM ' . $this->db->nameQuote('#__k2_additional_categories') . ' AS ' . $this->db->nameQuote('cats') .
 			' WHERE ' . $this->db->nameQuote('k2.id') . ' = ' . $this->db->nameQuote('cats.itemId') .
-			') AS ' . $this->db->nameQuote('categories') .
+			') AS ' . $this->db->nameQuote('categories') . ',' .
 
-			// Join K2 items, K2 locations and Additonal categories tables by item ID
+			// Get all additional categories names
+			' ( SELECT ' .
+			' GROUP_CONCAT(' . $this->db->nameQuote('cat.alias') . ')' .
+			' FROM ' . $this->db->nameQuote('#__k2_categories') . ' AS ' . $this->db->nameQuote('cat') .
+			' JOIN ' . $this->db->nameQuote('#__k2_additional_categories') . ' AS ' . $this->db->nameQuote('cats') .
+			' ON (' . $this->db->nameQuote('cat.id') . ' = ' . $this->db->nameQuote('cats.catid') . ')' .
+			' WHERE ' . $this->db->nameQuote('k2.id') . ' = ' . $this->db->nameQuote('cats.itemId') .
+			' AND ' . $this->db->nameQuote('cat.id') . ' NOT IN (' . implode(',', $this->params->get('regionCategories')) . ')' .
+			') AS ' . $this->db->nameQuote('categoryNames') .
+
+			// Join K2 items, K2 locations and additional categories tables by item ID
 			' FROM ' . $this->db->nameQuote('#__k2_items') . ' AS ' . $this->db->nameQuote('k2') .
 			' JOIN ' . $this->db->nameQuote('#__k2_items_locations') . ' AS ' . $this->db->nameQuote('loc') .
 			' ON (' . $this->db->nameQuote('loc.itemId') . ' = ' . $this->db->nameQuote('k2.id') . ')' .
