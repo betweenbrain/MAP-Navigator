@@ -25,7 +25,7 @@ class MapnavigatorViewMapnavigator extends JView
 	{
 		parent::__construct();
 		$this->doc = JFactory::getDocument();
-		$this->doc->addScript(JURI::base(true) . '/media/com_mapnavigator/js/map-navigator.min.js');
+		$this->doc->addScript(JURI::base(true) . '/media/com_mapnavigator/js/map-navigator.js');
 		$this->doc->addScript(JURI::base(true) . '/media/com_mapnavigator/js/markerclusterer_compiled.js');
 		$this->doc->addStylesheet(JURI::base(true) . '/media/com_mapnavigator/css/map-navigator.min.css');
 	}
@@ -41,12 +41,11 @@ class MapnavigatorViewMapnavigator extends JView
 	 */
 	function display($tpl = null)
 	{
-		$model  = & $this->getModel();
-		$params = & JComponentHelper::getParams('com_mapnavigator');
+		$model = & $this->getModel();
 
 		$items      = $model->getItems();
-		$categories = $model->getCategories($params->get('primaryCategory'), $params->get('regionCategories'));
-		$regions    = $model->getRegionCategories($params->get('regionCategories'));
+		$categories = $model->getCategories();
+		$regions    = $model->getRegionCategories();
 
 		$this->assignRef('categories', $categories);
 		$this->assignRef('items', $items);

@@ -39,7 +39,7 @@ class MapnavigatorModelMapnavigator extends JModel
 	 *
 	 * @return string The greeting to be displayed to the user
 	 */
-	function getItems($regionCategories)
+	function getItems()
 	{
 		$query = ' SELECT ' .
 			$this->db->nameQuote('k2.alias') . ',' .
@@ -90,14 +90,14 @@ class MapnavigatorModelMapnavigator extends JModel
 	 *
 	 * @return mixed
 	 */
-	function getCategories($primaryCategory, $regionCategories)
+	function getCategories()
 	{
 		$query = ' SELECT ' .
 			$this->db->nameQuote('id') . ',' .
 			$this->db->nameQuote('name') .
 			' FROM ' . $this->db->nameQuote('#__k2_categories') .
-			' WHERE ' . $this->db->nameQuote('parent') . ' = ' . $this->db->quote($primaryCategory) .
-			' AND ' . $this->db->nameQuote('id') . ' NOT IN (' . implode(',', $regionCategories) . ')' .
+			' WHERE ' . $this->db->nameQuote('parent') . ' = ' . $this->db->quote($this->params->get('primaryCategory')) .
+			' AND ' . $this->db->nameQuote('id') . ' NOT IN (' . implode(',', $this->params->get('regionCategories')) . ')' .
 			' AND ' . $this->db->nameQuote('published') . ' = ' . $this->db->quote('1');
 
 		$this->db->setQuery($query);
@@ -110,14 +110,14 @@ class MapnavigatorModelMapnavigator extends JModel
 	 *
 	 * @return mixed
 	 */
-	function getRegionCategories($regionCategories)
+	function getRegionCategories()
 	{
 		$query = ' SELECT ' .
 			$this->db->nameQuote('id') . ',' .
 			$this->db->nameQuote('name') . ',' .
 			$this->db->nameQuote('alias') .
 			' FROM ' . $this->db->nameQuote('#__k2_categories') .
-			' WHERE ' . $this->db->nameQuote('id') . ' IN (' . implode(',', $regionCategories) . ')' .
+			' WHERE ' . $this->db->nameQuote('id') . ' IN (' . implode(',', $this->params->get('regionCategories')) . ')' .
 			' AND ' . $this->db->nameQuote('published') . ' = ' . $this->db->quote('1');
 
 		$this->db->setQuery($query);
@@ -133,7 +133,6 @@ class MapnavigatorModelMapnavigator extends JModel
 	function generateMarkerData($items)
 	{
 		$key    = null;
-		$params = & JComponentHelper::getParams('com_mapnavigator');
 
 		foreach ($items as $item)
 		{
@@ -146,7 +145,7 @@ class MapnavigatorModelMapnavigator extends JModel
 			foreach (json_decode($item->locations, true) as $type => $locales)
 			{
 				// Filter locations by type if belonging to the designated category
-				if (($item->catid === $params->get('artistCategory')) && ($type != JRequest::getVar('location')))
+				if (($item->catid === $this->params->get('artistCategory')) && ($type != JRequest::getVar('location')))
 				{
 					continue;
 				}
