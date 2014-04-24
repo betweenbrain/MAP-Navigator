@@ -233,6 +233,7 @@ function initialize() {
 					origin: new google.maps.Point(0, 0),
 					anchor: new google.maps.Point(12, 12)
 				};
+
 				markers[i].setIcon(markerIcon);
 			}
 		}
