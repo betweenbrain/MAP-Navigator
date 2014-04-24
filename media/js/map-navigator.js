@@ -20,7 +20,7 @@ window.onload = loadScript;
 
 
 // Global vars
-var bounds, button, cityStyles, globalStyles, i, infoWnd, map, markerCluster, dot, dotHover;
+var artistIcon, artistHoverIcon, bounds, button, i, infoWnd, map, markerCluster, dot, dotHover;
 var markers = [];
 
 //set style options for marker clusters (ordered according to increasing cluster size, smallest first)
@@ -44,7 +44,7 @@ var mcOptions = { styles: [
 	maxZoom             : 18
 };
 
-globalStyles = [
+var globalStyles = [
 	{
 		featureType: 'all',
 		stylers    : [
@@ -79,7 +79,7 @@ globalStyles = [
 	}
 ];
 
-cityStyles = [
+var cityStyles = [
 	{
 		featureType: 'all',
 		stylers    : [
@@ -132,7 +132,6 @@ cityStyles = [
 	}
 ];
 
-
 function initialize() {
 
 	infoWnd = new google.maps.InfoWindow();
@@ -163,6 +162,20 @@ function initialize() {
 		fillOpacity : 1,
 		strokeColor : '#ff0000',
 		strokeWeight: 2
+	};
+
+	artistIcon = {
+		url   : 'http://media.guggenheim.org/map-navigator/sprite.png',
+		size  : new google.maps.Size(24, 24),
+		origin: new google.maps.Point(0, 0),
+		anchor: new google.maps.Point(12, 12)
+	};
+
+	artistHoverIcon = {
+		url   : 'http://media.guggenheim.org/map-navigator/sprite.png',
+		size  : new google.maps.Size(24, 24),
+		origin: new google.maps.Point(0, 0),
+		anchor: new google.maps.Point(12, 12)
 	};
 
 	markerCluster = new MarkerClusterer(map, markers, mcOptions);
@@ -229,14 +242,7 @@ function initialize() {
 			if (map.getZoom() < 5) {
 				markers[i].setIcon(dot);
 			} else {
-				var markerIcon = {
-					url   : 'http://media.guggenheim.org/map-navigator/' + markers[i].type + '.png',
-					size  : new google.maps.Size(24, 24),
-					origin: new google.maps.Point(0, 0),
-					anchor: new google.maps.Point(12, 12)
-				};
-
-				markers[i].setIcon(markerIcon);
+				markers[i].setIcon(window[markers[i].category + 'Icon']);
 			}
 		}
 
@@ -291,30 +297,27 @@ function addMarker(location, object) {
 		position: location,
 		map     : map,
 		title   : object.title,
-		icon    : markerIcon,
+		icon    : object.category + 'Icon',
 		alias   : object.alias,
 		category: object.category,
 		type    : object.type,
 		text    : object.info
 	});
 
-
 	// Extend boundaries to fit new markers
 	// var location = new google.maps.LatLng(markers[key].lat, markers[key].lng);
 	bounds.extend(location);
 
 	google.maps.event.addListener(marker, 'mouseover', function () {
-		marker.setIcon(markerHoverIcon);
+		marker.setIcon(window[marker.category + 'Icon']);
 	});
 
 	google.maps.event.addListener(marker, 'mouseout', function () {
-
 		// Zoom based marker icons
 		if (map.getZoom() < 5) {
 			marker.setIcon(dot);
 		} else {
-
-			marker.setIcon(markerIcon);
+			marker.setIcon(window[marker.category + 'HoverIcon']);
 		}
 	});
 
