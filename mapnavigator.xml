@@ -27,6 +27,7 @@
 
 	<media folder="media" destination="com_mapnavigator">
 		<folder>css</folder>
+		<folder>images</folder>
 		<folder>js</folder>
 	</media>
 
