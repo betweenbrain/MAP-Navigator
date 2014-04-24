@@ -20,13 +20,12 @@ $params = & JComponentHelper::getParams('com_mapnavigator');
 						<input class="filters" type="checkbox" name="categories[]" value="<?php echo $category->id ?>"><?php echo $category->name ?>
 					</label>
 					<?php if ($category->id === $params->get('artistCategory')) : ?>
-						<br />
-						<label>
-							<input type="radio" name="location" value="birth">Born
-						</label>
-						<label>
-							<input type="radio" name="location" value="primary" checked>Works
-						</label>
+						<div class="toggle-btn-group clearfix">
+							<input id="birth" type="radio" name="location" value="birth">
+							<label for="birth">Born</label>
+							<input id="primary" type="radio" name="location" value="primary" checked="checked">
+							<label for="primary">Works</label>
+						</div>
 					<?php endif ?>
 				</li>
 			<?php endforeach ?>

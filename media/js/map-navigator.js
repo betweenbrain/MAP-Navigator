@@ -388,4 +388,11 @@ function createSidebarElement(marker, info) {
 		});
 	};
 
+	$(document).on('change', '.toggle-btn-group input[type=radio]', function () {
+		if (this.checked) {
+			$('input[name="' + this.name + '"].checked').removeClass('checked');
+			$(this).addClass('checked');
+		}
+	});
+
 })(jQuery)
