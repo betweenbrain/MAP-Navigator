@@ -20,7 +20,7 @@ window.onload = loadScript;
 
 
 // Global vars
-var bounds, i, infoWnd, map, markerCluster, mapZoom, dot, dotHover;
+var bounds, button, i, infoWnd, map, markerCluster, dot, dotHover;
 var markers = [];
 
 //set style options for marker clusters (ordered according to increasing cluster size, smallest first)
@@ -39,7 +39,8 @@ var mcOptions = { styles: [
 		textSize : 24,
 		url      : "http://media.guggenheim.org/map-navigator/cluster.png"
 	}
-]};
+],
+	zoomOnClick         : false};
 
 
 function initialize() {
@@ -116,7 +117,7 @@ function initialize() {
 	if (navigator.geolocation) {
 
 		var toolbar = document.getElementById('toolbar');
-		var button = document.createElement('button');
+		button = document.createElement('button');
 		button.innerHTML = '<img src="http://media.guggenheim.org/map-navigator/home.png" />';
 		toolbar.appendChild(button);
 
@@ -135,7 +136,7 @@ function initialize() {
 		});
 
 		// Adds custom zoom buttons
-		var button = document.createElement('button');
+		button = document.createElement('button');
 		button.className = 'zoom in';
 		button.innerHTML = '<img src="http://media.guggenheim.org/map-navigator/plus.png" />';
 		toolbar.appendChild(button);
@@ -145,7 +146,7 @@ function initialize() {
 			event.preventDefault();
 		});
 
-		var button = document.createElement('button');
+		button = document.createElement('button');
 		button.className = 'zoom out';
 		button.innerHTML = '<img src="http://media.guggenheim.org/map-navigator/minus.png" />';
 		toolbar.appendChild(button);
@@ -155,6 +156,12 @@ function initialize() {
 			event.preventDefault();
 		});
 	}
+
+	// Custom marker cluster click event
+	google.maps.event.addListener(markerCluster, 'clusterclick', function (cluster) {
+		map.setCenter(cluster.getCenter());
+		map.setZoom(map.getZoom() + 7);
+	});
 
 	// Event driven zoom based marker icons
 	google.maps.event.addListener(map, 'zoom_changed', function () {
@@ -386,7 +393,7 @@ function createSidebarElement(marker, info) {
 				}
 			}
 		});
-	};
+	}
 
 	$(document).on('change', '.toggle-btn-group input[type=radio]', function () {
 		if (this.checked) {
@@ -395,4 +402,4 @@ function createSidebarElement(marker, info) {
 		}
 	});
 
-})(jQuery)
+})(jQuery);
