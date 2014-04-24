@@ -41,7 +41,114 @@ var mcOptions = { styles: [
 	}
 ],
 	zoomOnClick         : false,
-	maxZoom             : 18};
+	maxZoom             : 18
+};
+
+dot = {
+	path        : google.maps.SymbolPath.CIRCLE,
+	scale       : 2,
+	fillColor   : '#8a2b87',
+	fillOpacity : 1,
+	strokeColor : '#8a2b87',
+	strokeWeight: 2
+};
+
+dotHover = {
+	path        : google.maps.SymbolPath.CIRCLE,
+	scale       : 2,
+	fillColor   : '#ff0000',
+	fillOpacity : 1,
+	strokeColor : '#ff0000',
+	strokeWeight: 2
+};
+
+globalStyles = [
+	{
+		featureType: 'all',
+		stylers    : [
+			{ visibility: 'off' }
+
+		]
+	},
+	{
+		featureType: 'water',
+		stylers    : [
+			{ visibility: 'on' },
+			{ color: '#ffffff' }
+		]
+	},
+	{
+		featureType: 'administrative.country',
+		elementType: "labels.text.fill",
+		stylers    : [
+			{ visibility: 'simplifed' },
+			{ color: '#888888' },
+			{ weight: 1 }
+		]
+	},
+	{
+		featureType: 'administrative.locality',
+		elementType: "labels.text.fill",
+		stylers    : [
+			{ visibility: 'simplifed' },
+			{ color: '#888888' },
+			{ weight: 1 }
+		]
+	}
+];
+
+cityStyles = [
+	{
+		featureType: 'all',
+		stylers    : [
+			{ visibility: 'off' }
+
+		]
+	},
+	{
+		featureType: 'water',
+		stylers    : [
+			{ visibility: 'on' },
+			{ color: '#ffffff' }
+		]
+	},
+	{
+		featureType: 'administrative.country',
+		elementType: "labels.text.fill",
+		stylers    : [
+			{ visibility: 'simplifed' },
+			{ color: '#888888' },
+			{ weight: 1 }
+		]
+	},
+	{
+		featureType: 'administrative.locality',
+		elementType: "labels.text.fill",
+		stylers    : [
+			{ visibility: 'simplifed' },
+			{ color: '#888888' },
+			{ weight: 1 }
+		]
+	},
+	{
+		featureType: 'road.arterial',
+		stylers    : [
+			{ visibility: 'on' }
+		]
+	},
+	{
+		featureType: 'road.local',
+		stylers    : [
+			{ visibility: 'on' }
+		]
+	},
+	{
+		featureType: 'poi.attraction',
+		stylers    : [
+			{ visibility: 'on' }
+		]
+	}
+];
 
 
 function initialize() {
@@ -58,112 +165,6 @@ function initialize() {
 	map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
 	markerCluster = new MarkerClusterer(map, markers, mcOptions);
-
-	dot = {
-		path        : google.maps.SymbolPath.CIRCLE,
-		scale       : 2,
-		fillColor   : '#8a2b87',
-		fillOpacity : 1,
-		strokeColor : '#8a2b87',
-		strokeWeight: 2
-	};
-
-	dotHover = {
-		path        : google.maps.SymbolPath.CIRCLE,
-		scale       : 2,
-		fillColor   : '#ff0000',
-		fillOpacity : 1,
-		strokeColor : '#ff0000',
-		strokeWeight: 2
-	};
-
-	globalStyles = [
-		{
-			featureType: 'all',
-			stylers    : [
-				{ visibility: 'off' }
-
-			]
-		},
-		{
-			featureType: 'water',
-			stylers    : [
-				{ visibility: 'on' },
-				{ color: '#ffffff' }
-			]
-		},
-		{
-			featureType: 'administrative.country',
-			elementType: "labels.text.fill",
-			stylers    : [
-				{ visibility: 'simplifed' },
-				{ color: '#888888' },
-				{ weight: 1 }
-			]
-		},
-		{
-			featureType: 'administrative.locality',
-			elementType: "labels.text.fill",
-			stylers    : [
-				{ visibility: 'simplifed' },
-				{ color: '#888888' },
-				{ weight: 1 }
-			]
-		}
-	];
-
-	cityStyles = [
-		{
-			featureType: 'all',
-			stylers    : [
-				{ visibility: 'off' }
-
-			]
-		},
-		{
-			featureType: 'water',
-			stylers    : [
-				{ visibility: 'on' },
-				{ color: '#ffffff' }
-			]
-		},
-		{
-			featureType: 'administrative.country',
-			elementType: "labels.text.fill",
-			stylers    : [
-				{ visibility: 'simplifed' },
-				{ color: '#888888' },
-				{ weight: 1 }
-			]
-		},
-		{
-			featureType: 'administrative.locality',
-			elementType: "labels.text.fill",
-			stylers    : [
-				{ visibility: 'simplifed' },
-				{ color: '#888888' },
-				{ weight: 1 }
-			]
-		},
-		{
-			featureType: 'road.arterial',
-			stylers    : [
-				{ visibility: 'on' }
-			]
-		},
-		{
-			featureType: 'road.local',
-			stylers    : [
-				{ visibility: 'on' }
-			]
-		},
-		{
-			featureType: 'poi.attraction',
-			stylers    : [
-				{ visibility: 'on' }
-			]
-		}
-	];
 
 	map.setOptions({styles: globalStyles});
 
