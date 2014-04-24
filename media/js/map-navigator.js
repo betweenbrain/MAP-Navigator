@@ -44,24 +44,6 @@ var mcOptions = { styles: [
 	maxZoom             : 18
 };
 
-dot = {
-	path        : google.maps.SymbolPath.CIRCLE,
-	scale       : 2,
-	fillColor   : '#8a2b87',
-	fillOpacity : 1,
-	strokeColor : '#8a2b87',
-	strokeWeight: 2
-};
-
-dotHover = {
-	path        : google.maps.SymbolPath.CIRCLE,
-	scale       : 2,
-	fillColor   : '#ff0000',
-	fillOpacity : 1,
-	strokeColor : '#ff0000',
-	strokeWeight: 2
-};
-
 globalStyles = [
 	{
 		featureType: 'all',
@@ -152,6 +134,7 @@ cityStyles = [
 
 
 function initialize() {
+
 	infoWnd = new google.maps.InfoWindow();
 
 	var mapOptions = {
@@ -163,6 +146,24 @@ function initialize() {
 	};
 
 	map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
+	dot = {
+		path        : google.maps.SymbolPath.CIRCLE,
+		scale       : 2,
+		fillColor   : '#8a2b87',
+		fillOpacity : 1,
+		strokeColor : '#8a2b87',
+		strokeWeight: 2
+	};
+
+	dotHover = {
+		path        : google.maps.SymbolPath.CIRCLE,
+		scale       : 2,
+		fillColor   : '#ff0000',
+		fillOpacity : 1,
+		strokeColor : '#ff0000',
+		strokeWeight: 2
+	};
 
 	markerCluster = new MarkerClusterer(map, markers, mcOptions);
 
