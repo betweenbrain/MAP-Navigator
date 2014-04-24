@@ -40,7 +40,8 @@ var mcOptions = { styles: [
 		url      : "http://media.guggenheim.org/map-navigator/cluster.png"
 	}
 ],
-	zoomOnClick         : false};
+	zoomOnClick         : false,
+	maxZoom             : 18};
 
 
 function initialize() {
@@ -160,7 +161,11 @@ function initialize() {
 	// Custom marker cluster click event
 	google.maps.event.addListener(markerCluster, 'clusterclick', function (cluster) {
 		map.setCenter(cluster.getCenter());
-		map.setZoom(map.getZoom() + 7);
+		if(map.getZoom() > 12){
+			map.setZoom(map.getZoom() + 4);
+		} else{
+			map.setZoom(map.getZoom() + 7);
+		}
 	});
 
 	// Event driven zoom based marker icons
