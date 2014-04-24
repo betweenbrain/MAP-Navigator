@@ -45,7 +45,6 @@ class MapnavigatorModelMapnavigator extends JModel
 			$this->db->nameQuote('k2.title') . ',' .
 			$this->db->nameQuote('k2.introtext') . ',' .
 			$this->db->nameQuote('k2.plugins') . ',' .
-			$this->db->nameQuote('cats.catid') . ',' .
 			$this->db->nameQuote('loc.locations') . ',' .
 
 			// Get all additional categories
