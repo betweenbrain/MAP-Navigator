@@ -229,9 +229,9 @@ function initialize() {
 			} else {
 				var markerIcon = {
 					url   : 'http://media.guggenheim.org/map-navigator/' + markers[i].type + '.png',
-					size  : new google.maps.Size(24, 24),
-					origin: new google.maps.Point(0, 0),
-					anchor: new google.maps.Point(12, 12)
+					size  : (24, 24),
+					origin: (0, 0),
+					anchor: (12, 12)
 				};
 
 				markers[i].setIcon(markerIcon);
@@ -273,10 +273,11 @@ function addMarker(location, alias, title, info, type) {
 
 	var markerIcon = {
 		url   : 'http://media.guggenheim.org/map-navigator/' + type + '.png',
-		size  : new google.maps.Size(24, 24),
-		origin: new google.maps.Point(0, 0),
-		anchor: new google.maps.Point(12, 12)
+		size  : (24, 24),
+		origin: (0, 0),
+		anchor: (12, 12)
 	};
+
 	var marker = new google.maps.Marker({
 		position: location,
 		map     : map,
@@ -295,9 +296,9 @@ function addMarker(location, alias, title, info, type) {
 	google.maps.event.addListener(marker, 'mouseover', function () {
 		var markerIcon = {
 			url   : 'http://media.guggenheim.org/map-navigator/' + type + '-hover.png',
-			size  : new google.maps.Size(24, 24),
-			origin: new google.maps.Point(0, 0),
-			anchor: new google.maps.Point(12, 12)
+			size  : (24, 24),
+			origin: (0, 0),
+			anchor: (12, 12)
 		};
 		marker.setIcon(markerIcon);
 	});
