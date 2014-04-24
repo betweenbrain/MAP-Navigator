@@ -20,7 +20,7 @@ window.onload = loadScript;
 
 
 // Global vars
-var bounds, button, i, infoWnd, map, markerCluster, dot, dotHover;
+var bounds, button, cityStyles, globalStyles, i, infoWnd, map, markerCluster, dot, dotHover;
 var markers = [];
 
 //set style options for marker clusters (ordered according to increasing cluster size, smallest first)
@@ -77,7 +77,7 @@ function initialize() {
 		strokeWeight: 2
 	};
 
-	var styles = [
+	globalStyles = [
 		{
 			featureType: 'all',
 			stylers    : [
@@ -112,7 +112,60 @@ function initialize() {
 		}
 	];
 
-	map.setOptions({styles: styles});
+	cityStyles = [
+		{
+			featureType: 'all',
+			stylers    : [
+				{ visibility: 'off' }
+
+			]
+		},
+		{
+			featureType: 'water',
+			stylers    : [
+				{ visibility: 'on' },
+				{ color: '#ffffff' }
+			]
+		},
+		{
+			featureType: 'administrative.country',
+			elementType: "labels.text.fill",
+			stylers    : [
+				{ visibility: 'simplifed' },
+				{ color: '#888888' },
+				{ weight: 1 }
+			]
+		},
+		{
+			featureType: 'administrative.locality',
+			elementType: "labels.text.fill",
+			stylers    : [
+				{ visibility: 'simplifed' },
+				{ color: '#888888' },
+				{ weight: 1 }
+			]
+		},
+		{
+			featureType: 'road.arterial',
+			stylers    : [
+				{ visibility: 'on' }
+			]
+		},
+		{
+			featureType: 'road.local',
+			stylers    : [
+				{ visibility: 'on' }
+			]
+		},
+		{
+			featureType: 'poi.attraction',
+			stylers    : [
+				{ visibility: 'on' }
+			]
+		}
+	];
+
+	map.setOptions({styles: globalStyles});
 
 	// Adds My Location button is geolocation is supported by the browser
 	if (navigator.geolocation) {
@@ -182,6 +235,12 @@ function initialize() {
 				};
 				markers[i].setIcon(markerIcon);
 			}
+		}
+
+		if (map.getZoom() < 5) {
+			map.setOptions({styles: globalStyles});
+		} else {
+			map.setOptions({styles: cityStyles});
 		}
 	});
 }
