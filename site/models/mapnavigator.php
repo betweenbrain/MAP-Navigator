@@ -53,7 +53,7 @@ class MapnavigatorModelMapnavigator extends JModel
 			' GROUP_CONCAT(' . $this->db->nameQuote('cats.catid') . ')' .
 			' FROM ' . $this->db->nameQuote('#__k2_additional_categories') . ' AS ' . $this->db->nameQuote('cats') .
 			' WHERE ' . $this->db->nameQuote('k2.id') . ' = ' . $this->db->nameQuote('cats.itemId') .
-			') AS ' . $this->db->nameQuote('categoryIds') . ',' .
+			') AS ' . $this->db->nameQuote('categoryIDs') . ',' .
 
 			// Get first additional categories name
 			' ( SELECT ' .
@@ -101,7 +101,8 @@ class MapnavigatorModelMapnavigator extends JModel
 			' WHERE ' . $this->db->nameQuote('parent') . ' = ' . $this->db->quote($this->params->get('primaryCategory')) .
 			' AND ' . $this->db->nameQuote('id') . ' NOT IN (' . implode(',', $this->params->get('regionCategories')) . ')' .
 			' AND ' . $this->db->nameQuote('published') . ' = ' . $this->db->quote('1') .
-			' AND ' . $this->db->nameQuote('trash') . ' = ' . $this->db->quote('0');
+			' AND ' . $this->db->nameQuote('trash') . ' = ' . $this->db->quote('0') .
+			' ORDER BY ' . $this->db->nameQuote('ordering') . ' ASC';
 
 		$this->db->setQuery($query);
 
@@ -140,7 +141,7 @@ class MapnavigatorModelMapnavigator extends JModel
 		foreach ($items as $item)
 		{
 			// Filter by region
-			if (JRequest::getVar('region') != '' && !in_array(JRequest::getVar('region'), explode(',', $item->categoryIds)))
+			if (JRequest::getVar('region') != '' && !in_array(JRequest::getVar('region'), explode(',', $item->categoryIDs)))
 			{
 				continue;
 			}
