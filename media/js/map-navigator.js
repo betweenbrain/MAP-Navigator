@@ -250,8 +250,10 @@ function initialize() {
 	if (navigator.geolocation) {
 
 		var toolbar = document.getElementById('toolbar');
-		element = document.createElement('button');
-		element.innerHTML = '<img src="http://media.guggenheim.org/map-navigator/home.png" />';
+		element = document.createElement('label');
+		element.className = 'my-location';
+		element.title = "My Location";
+		element.innerHTML = '<input type="button" name="my-location">My Location';
 		toolbar.appendChild(element);
 
 		element.addEventListener("click", function (event) {
@@ -269,9 +271,10 @@ function initialize() {
 		});
 
 		// Adds custom zoom buttons
-		element = document.createElement('button');
-		element.className = 'zoom in';
-		element.innerHTML = '<img src="http://media.guggenheim.org/map-navigator/plus.png" />';
+		element = document.createElement('label');
+		element.className = 'zoom-in';
+		element.title = "Zoom In";
+		element.innerHTML = '<input type="button" name="zoom-in">Zoom In';
 		toolbar.appendChild(element);
 
 		element.addEventListener("click", function (event) {
@@ -279,9 +282,10 @@ function initialize() {
 			event.preventDefault();
 		});
 
-		element = document.createElement('button');
-		element.className = 'zoom out';
-		element.innerHTML = '<img src="http://media.guggenheim.org/map-navigator/minus.png" />';
+		element = document.createElement('label');
+		element.className = 'zoom-out';
+		element.title = "Zoom Out";
+		element.innerHTML = '<input type="button" name="zoom-out">Zoom Out';
 		toolbar.appendChild(element);
 
 		element.addEventListener("click", function (event) {
