@@ -20,7 +20,7 @@ window.onload = loadScript;
 
 
 // Global vars
-var artistIcon, artistHoverIcon, audioIcon, audioHoverIcon, blogIcon, blogHoverIcon, eventIcon, eventHoverIcon, resourceIcon, resourceHoverIcon, videoIcon, videoHoverIcon, bounds, button, i, infoWnd, map, markerCluster, dot, dotHover;
+var artistIcon, artistHoverIcon, audioIcon, audioHoverIcon, blogIcon, blogHoverIcon, eventIcon, eventHoverIcon, resourceIcon, resourceHoverIcon, videoIcon, videoHoverIcon, bounds, element, i, infoWnd, map, markerCluster, dot, dotHover;
 var markers = [];
 
 //set style options for marker clusters (ordered according to increasing cluster size, smallest first)
@@ -250,11 +250,11 @@ function initialize() {
 	if (navigator.geolocation) {
 
 		var toolbar = document.getElementById('toolbar');
-		button = document.createElement('button');
-		button.innerHTML = '<img src="http://media.guggenheim.org/map-navigator/home.png" />';
-		toolbar.appendChild(button);
+		element = document.createElement('button');
+		element.innerHTML = '<img src="http://media.guggenheim.org/map-navigator/home.png" />';
+		toolbar.appendChild(element);
 
-		button.addEventListener("click", function (event) {
+		element.addEventListener("click", function (event) {
 			navigator.geolocation.getCurrentPosition(function (position) {
 				initialLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 				map.setCenter(initialLocation);
@@ -269,22 +269,22 @@ function initialize() {
 		});
 
 		// Adds custom zoom buttons
-		button = document.createElement('button');
-		button.className = 'zoom in';
-		button.innerHTML = '<img src="http://media.guggenheim.org/map-navigator/plus.png" />';
-		toolbar.appendChild(button);
+		element = document.createElement('button');
+		element.className = 'zoom in';
+		element.innerHTML = '<img src="http://media.guggenheim.org/map-navigator/plus.png" />';
+		toolbar.appendChild(element);
 
-		button.addEventListener("click", function (event) {
+		element.addEventListener("click", function (event) {
 			map.setZoom(map.getZoom() + 1);
 			event.preventDefault();
 		});
 
-		button = document.createElement('button');
-		button.className = 'zoom out';
-		button.innerHTML = '<img src="http://media.guggenheim.org/map-navigator/minus.png" />';
-		toolbar.appendChild(button);
+		element = document.createElement('button');
+		element.className = 'zoom out';
+		element.innerHTML = '<img src="http://media.guggenheim.org/map-navigator/minus.png" />';
+		toolbar.appendChild(element);
 
-		button.addEventListener("click", function (event) {
+		element.addEventListener("click", function (event) {
 			map.setZoom(map.getZoom() - 1);
 			event.preventDefault();
 		});
