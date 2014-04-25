@@ -93,12 +93,14 @@ class MapnavigatorModelMapnavigator extends JModel
 	function getCategories()
 	{
 		$query = ' SELECT ' .
+			$this->db->nameQuote('alias') . ',' .
 			$this->db->nameQuote('id') . ',' .
 			$this->db->nameQuote('name') .
 			' FROM ' . $this->db->nameQuote('#__k2_categories') .
 			' WHERE ' . $this->db->nameQuote('parent') . ' = ' . $this->db->quote($this->params->get('primaryCategory')) .
 			' AND ' . $this->db->nameQuote('id') . ' NOT IN (' . implode(',', $this->params->get('regionCategories')) . ')' .
-			' AND ' . $this->db->nameQuote('published') . ' = ' . $this->db->quote('1');
+			' AND ' . $this->db->nameQuote('published') . ' = ' . $this->db->quote('1') .
+			' AND ' . $this->db->nameQuote('trash') . ' = ' . $this->db->quote('0');
 
 		$this->db->setQuery($query);
 
