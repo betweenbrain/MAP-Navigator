@@ -20,24 +20,18 @@ window.onload = loadScript;
 
 
 // Global vars
-var artistIcon, artistHoverIcon, bounds, button, i, infoWnd, map, markerCluster, dot, dotHover;
+var artistIcon, artistHoverIcon, audioIcon, audioHoverIcon, blogIcon, blogHoverIcon, eventIcon, eventHoverIcon, resourceIcon, resourceHoverIcon, videoIcon, videoHoverIcon, bounds, button, i, infoWnd, map, markerCluster, dot, dotHover;
 var markers = [];
 
 //set style options for marker clusters (ordered according to increasing cluster size, smallest first)
 var mcOptions = { styles: [
 	{
-		height   : 28,
-		width    : 28,
-		textColor: '#8a2b87',
-		textSize : 12,
-		url      : "http://media.guggenheim.org/map-navigator/cluster.png"
-	},
-	{
-		height   : 28,
-		width    : 28,
-		textColor: '#ff0000',
-		textSize : 24,
-		url      : "http://media.guggenheim.org/map-navigator/cluster.png"
+		height            : 30,
+		width             : 30,
+		textColor         : '#8a2b87',
+		textSize          : 12,
+		url               : 'http://media.guggenheim.org/map-navigator/sprite.png',
+		backgroundPosition: "0px -120px"
 	}
 ],
 	zoomOnClick         : false,
@@ -166,16 +160,86 @@ function initialize() {
 
 	artistIcon = {
 		url   : 'http://media.guggenheim.org/map-navigator/sprite.png',
-		size  : new google.maps.Size(24, 24),
-		origin: new google.maps.Point(0, 0),
-		anchor: new google.maps.Point(12, 12)
+		size  : new google.maps.Size(26, 26),
+		origin: new google.maps.Point(33, 153),
+		anchor: new google.maps.Point(13, 13)
 	};
 
 	artistHoverIcon = {
 		url   : 'http://media.guggenheim.org/map-navigator/sprite.png',
-		size  : new google.maps.Size(24, 24),
-		origin: new google.maps.Point(0, 0),
-		anchor: new google.maps.Point(12, 12)
+		size  : new google.maps.Size(26, 26),
+		origin: new google.maps.Point(63, 153),
+		anchor: new google.maps.Point(13, 13)
+	};
+
+	audioIcon = {
+		url   : 'http://media.guggenheim.org/map-navigator/sprite.png',
+		size  : new google.maps.Size(26, 26),
+		origin: new google.maps.Point(483, 153),
+		anchor: new google.maps.Point(13, 13)
+	};
+
+	audioHoverIcon = {
+		url   : 'http://media.guggenheim.org/map-navigator/sprite.png',
+		size  : new google.maps.Size(26, 26),
+		origin: new google.maps.Point(513, 153),
+		anchor: new google.maps.Point(13, 13)
+	};
+
+	blogIcon = {
+		url   : 'http://media.guggenheim.org/map-navigator/sprite.png',
+		size  : new google.maps.Size(26, 26),
+		origin: new google.maps.Point(123, 153),
+		anchor: new google.maps.Point(13, 13)
+	};
+
+	blogHoverIcon = {
+		url   : 'http://media.guggenheim.org/map-navigator/sprite.png',
+		size  : new google.maps.Size(26, 26),
+		origin: new google.maps.Point(153, 153),
+		anchor: new google.maps.Point(13, 13)
+	};
+
+	eventIcon = {
+		url   : 'http://media.guggenheim.org/map-navigator/sprite.png',
+		size  : new google.maps.Size(26, 26),
+		origin: new google.maps.Point(212, 153),
+		anchor: new google.maps.Point(13, 13)
+	};
+
+	eventHoverIcon = {
+		url   : 'http://media.guggenheim.org/map-navigator/sprite.png',
+		size  : new google.maps.Size(26, 26),
+		origin: new google.maps.Point(242, 153),
+		anchor: new google.maps.Point(13, 13)
+	};
+
+	resourceIcon = {
+		url   : 'http://media.guggenheim.org/map-navigator/sprite.png',
+		size  : new google.maps.Size(26, 26),
+		origin: new google.maps.Point(392, 153),
+		anchor: new google.maps.Point(13, 13)
+	};
+
+	resourceHoverIcon = {
+		url   : 'http://media.guggenheim.org/map-navigator/sprite.png',
+		size  : new google.maps.Size(26, 26),
+		origin: new google.maps.Point(422, 153),
+		anchor: new google.maps.Point(13, 13)
+	};
+
+	videoIcon = {
+		url   : 'http://media.guggenheim.org/map-navigator/sprite.png',
+		size  : new google.maps.Size(26, 26),
+		origin: new google.maps.Point(302, 153),
+		anchor: new google.maps.Point(13, 13)
+	};
+
+	videoHoverIcon = {
+		url   : 'http://media.guggenheim.org/map-navigator/sprite.png',
+		size  : new google.maps.Size(26, 26),
+		origin: new google.maps.Point(332, 153),
+		anchor: new google.maps.Point(13, 13)
 	};
 
 	markerCluster = new MarkerClusterer(map, markers, mcOptions);
@@ -279,25 +343,11 @@ function addMarker(location, object) {
 		}
 	}
 
-	var markerIcon = {
-		url   : 'http://media.guggenheim.org/map-navigator/' + object.type + '.png',
-		size  : new google.maps.Size(24, 24),
-		origin: new google.maps.Point(0, 0),
-		anchor: new google.maps.Point(12, 12)
-	};
-
-	var markerHoverIcon = {
-		url   : 'http://media.guggenheim.org/map-navigator/' + object.type + '-hover.png',
-		size  : new google.maps.Size(24, 24),
-		origin: new google.maps.Point(0, 0),
-		anchor: new google.maps.Point(12, 12)
-	};
-
 	var marker = new google.maps.Marker({
 		position: location,
 		map     : map,
 		title   : object.title,
-		icon    : object.category + 'Icon',
+		icon    : window[object.category + 'Icon'],
 		alias   : object.alias,
 		category: object.category,
 		type    : object.type,
@@ -309,7 +359,7 @@ function addMarker(location, object) {
 	bounds.extend(location);
 
 	google.maps.event.addListener(marker, 'mouseover', function () {
-		marker.setIcon(window[marker.category + 'Icon']);
+		marker.setIcon(window[marker.category + 'HoverIcon']);
 	});
 
 	google.maps.event.addListener(marker, 'mouseout', function () {
@@ -317,7 +367,7 @@ function addMarker(location, object) {
 		if (map.getZoom() < 5) {
 			marker.setIcon(dot);
 		} else {
-			marker.setIcon(window[marker.category + 'HoverIcon']);
+			marker.setIcon(window[marker.category + 'Icon']);
 		}
 	});
 
