@@ -21,7 +21,7 @@ $half = floor(count($this->categories) / 2);
 			</ul>
 			<ul>
 				<?php endif ?>
-				<li>
+				<li class="<?php echo $category->alias ?>">
 					<label>
 						<input class="filters" type="checkbox" name="categories[]" value="<?php echo $category->id ?>"><?php echo $category->name ?>
 					</label>

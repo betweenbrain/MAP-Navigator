@@ -46,11 +46,15 @@
   border-bottom: 1px solid #999999; }
 
 #sidebar .toggler {
+  color: #8a2b87; }
+
+#filters li,
+#sidebar .toggler {
   display: block;
   width: 100%;
-  color: #8a2b87;
   position: relative; }
 
+#filters li:before,
 #sidebar .toggler:after {
   content: ' ';
   background-image: url(http://media.guggenheim.org/map-navigator/sprite.png);
@@ -60,8 +64,13 @@
   height: 26px;
   position: absolute;
   top: 0;
-  right: 10px;
   display: inline-block; }
+
+#filters li:before {
+  left: 10px; }
+
+#sidebar .toggler:after {
+  right: 10px; }
 
 #sidebar .artist:after {
   background-position: -33px -153px; }
@@ -111,6 +120,31 @@
   margin: 0;
   padding: 0;
   line-height: 1.25em; }
+
+#filters label {
+  color: #999999; }
+
+#filters label {
+  position: relative;
+  left: 32px; }
+
+#filters .artist:before {
+  background-position: -7px -153px; }
+
+#filters .audio:before {
+  background-position: -457px -153px; }
+
+#filters .blog:before {
+  background-position: -97px -153px; }
+
+#filters .event:before {
+  background-position: -186px -153px; }
+
+#filters .resource:before {
+  background-position: -366px -153px; }
+
+#filters .video:before {
+  background-position: -276px -153px; }
 
 #toolbar {
   position: relative;

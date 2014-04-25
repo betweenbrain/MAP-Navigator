@@ -52,27 +52,33 @@ $purple : #8a2b87;
 }
 
 #sidebar {
-  height     : 400px;
-  overflow-x : hidden;
-  overflow-y : auto;
-  z-index    : 1;
-  border-bottom: 3px solid $purple;
-  border-top: 3px solid $purple;
-  margin: .25em .5em;
+  height        : 400px;
+  overflow-x    : hidden;
+  overflow-y    : auto;
+  z-index       : 1;
+  border-bottom : 3px solid $purple;
+  border-top    : 3px solid $purple;
+  margin        : .25em .5em;
 }
 
-#sidebar li{
-  line-height: 2.25em;
-  border-bottom: 1px solid $grey;
+#sidebar li {
+
+  line-height   : 2.25em;
+  border-bottom : 1px solid $grey;
 }
 
 #sidebar .toggler {
+  color : $purple
+}
+
+#filters li,
+#sidebar .toggler {
   display  : block;
   width    : 100%;
-  color    : $purple;
   position : relative;
 }
 
+#filters li:before,
 #sidebar .toggler:after {
   content  : ' ';
   @include sprite;
@@ -80,8 +86,15 @@ $purple : #8a2b87;
   height   : 26px;
   position : absolute;
   top      : 0;
-  right    : 10px;
   display  : inline-block;
+}
+
+#filters li:before {
+  left : 10px;
+}
+
+#sidebar .toggler:after {
+  right : 10px;
 }
 
 #sidebar .artist:after {
@@ -138,14 +151,46 @@ $purple : #8a2b87;
 }
 
 #filters ul {
-  display: inline-block;
-  width: 48%;
+  display : inline-block;
+  width   : 48%;
 }
 
-#filters li{
-  margin: 0;
-  padding: 0;
-  line-height: 1.25em;
+#filters li {
+  margin      : 0;
+  padding     : 0;
+  line-height : 1.25em;
+}
+
+#filters label {
+  color : $grey;
+}
+
+#filters label {
+  position : relative;
+  left     : 32px;
+}
+
+#filters .artist:before {
+  background-position : -7px -153px;
+}
+
+#filters .audio:before {
+  background-position : -457px -153px;
+}
+
+#filters .blog:before {
+  background-position : -97px -153px;
+}
+
+#filters .event:before {
+  background-position : -186px -153px;
+}
+
+#filters .resource:before {
+  background-position : -366px -153px;
+}
+#filters .video:before {
+  background-position : -276px -153px;
 }
 
 #toolbar {
