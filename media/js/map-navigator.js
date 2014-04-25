@@ -390,7 +390,7 @@ function addMarker(location, object) {
 
 	// Check if marker has already been pushed to the markers title array
 	if (markers[marker.title] !== marker.title) {
-		createSidebarElement(marker, marker.text);
+		createSidebarElement(marker);
 	}
 
 	// Push to the markers title array
@@ -403,13 +403,13 @@ function addMarker(location, object) {
 	map.fitBounds(bounds);
 }
 
-function createSidebarElement(marker, info) {
+function createSidebarElement(marker) {
 	//Creates a sidebar button
 	var ul = document.getElementById('sidebar');
 	var li = document.createElement('li');
 	li.className = marker.alias;
 	var title = marker.getTitle();
-	li.innerHTML = '<a>' + title + '</a><div class="toggle" style="display: none">' + info + '</div>';
+	li.innerHTML = '<a class="' + marker.category + '">' + marker.title + '</a><div class="toggle" style="display: none">' + marker.text + '</div>';
 	ul.appendChild(li);
 
 	//Trigger a marker event when a sidebar item is acted on
