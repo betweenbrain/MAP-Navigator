@@ -53,17 +53,18 @@ class MapnavigatorModelMapnavigator extends JModel
 			' GROUP_CONCAT(' . $this->db->nameQuote('cats.catid') . ')' .
 			' FROM ' . $this->db->nameQuote('#__k2_additional_categories') . ' AS ' . $this->db->nameQuote('cats') .
 			' WHERE ' . $this->db->nameQuote('k2.id') . ' = ' . $this->db->nameQuote('cats.itemId') .
-			') AS ' . $this->db->nameQuote('categories') . ',' .
+			') AS ' . $this->db->nameQuote('categoryIds') . ',' .
 
-			// Get all additional categories names
+			// Get first additional categories name
 			' ( SELECT ' .
-			' GROUP_CONCAT(' . $this->db->nameQuote('cat.alias') . ')' .
+			$this->db->nameQuote('cat.alias') .
 			' FROM ' . $this->db->nameQuote('#__k2_categories') . ' AS ' . $this->db->nameQuote('cat') .
 			' JOIN ' . $this->db->nameQuote('#__k2_additional_categories') . ' AS ' . $this->db->nameQuote('cats') .
 			' ON (' . $this->db->nameQuote('cat.id') . ' = ' . $this->db->nameQuote('cats.catid') . ')' .
 			' WHERE ' . $this->db->nameQuote('k2.id') . ' = ' . $this->db->nameQuote('cats.itemId') .
 			' AND ' . $this->db->nameQuote('cat.id') . ' NOT IN (' . implode(',', $this->params->get('regionCategories')) . ')' .
-			') AS ' . $this->db->nameQuote('categoryNames') .
+			' LIMIT 1 ' .
+			') AS ' . $this->db->nameQuote('category') .
 
 			// Join K2 items, K2 locations and additional categories tables by item ID
 			' FROM ' . $this->db->nameQuote('#__k2_items') . ' AS ' . $this->db->nameQuote('k2') .
@@ -134,12 +135,12 @@ class MapnavigatorModelMapnavigator extends JModel
 	 */
 	function generateMarkerData($items)
 	{
-		$key    = null;
+		$key = null;
 
 		foreach ($items as $item)
 		{
 			// Filter by region
-			if (JRequest::getVar('region') != '' && !in_array(JRequest::getVar('region'), explode(',', $item->categories)))
+			if (JRequest::getVar('region') != '' && !in_array(JRequest::getVar('region'), explode(',', $item->categoryIds)))
 			{
 				continue;
 			}
@@ -154,13 +155,14 @@ class MapnavigatorModelMapnavigator extends JModel
 
 				foreach ($locales as $name => $data)
 				{
-					$markers[$key]['loc']   = $name;
-					$markers[$key]['type']  = $type;
-					$markers[$key]['lat']   = $data['lat'];
-					$markers[$key]['lng']   = $data['lng'];
-					$markers[$key]['info']  = $item->introtext;
-					$markers[$key]['title'] = $item->title;
-					$markers[$key]['alias'] = $item->alias;
+					$markers[$key]['alias']    = $item->alias;
+					$markers[$key]['info']     = $item->introtext;
+					$markers[$key]['lat']      = $data['lat'];
+					$markers[$key]['lng']      = $data['lng'];
+					$markers[$key]['loc']      = $name;
+					$markers[$key]['title']    = $item->title;
+					$markers[$key]['type']     = $type;
+					$markers[$key]['category'] = $item->category;
 
 					if (array_key_exists('itemImage', $item->universalFields))
 					{
