@@ -415,6 +415,7 @@ function createSidebarElement(marker) {
 	//Trigger a marker event when a sidebar item is acted on
 	google.maps.event.addDomListener(li, 'click', function () {
 		google.maps.event.trigger(marker, 'click');
+		map.setZoom(19);
 	});
 
 	google.maps.event.addDomListener(li, 'mouseover', function () {
