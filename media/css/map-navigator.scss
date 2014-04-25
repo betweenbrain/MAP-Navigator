@@ -1,0 +1,289 @@
+@charset "utf-8";
+
+/**
+ * File       
+ * Created    4/9/14 2:47 PM 
+ * Author     Matt Thomas | matt@betweenbrain.com | http://betweenbrain.com
+ * Support    https://github.com/betweenbrain/
+ * Copyright  Copyright (C) 2014 betweenbrain llc. All Rights Reserved.
+ * License    GNU GPL v2 or later
+ */
+
+/* Variables */
+$white : #fff;
+$grey : #999;
+$purple : #8a2b87;
+
+/* Mixins */
+@mixin shadow($properties) {
+  -moz-box-shadow    : $properties;
+  -webkit-box-shadow : $properties;
+  box-shadow         : $properties;
+}
+
+@mixin sprite() {
+  background-image  : url(http://media.guggenheim.org/map-navigator/sprite.png);
+  background-repeat : no-repeat;
+  background-size   : 788px 210px;
+}
+
+.map-navigator {
+  position    : absolute;
+  width       : 902px;
+  left        : 50%;
+  margin-left : -451px;
+}
+
+#map-canvas {
+  min-height : 800px;
+  margin     : 0px;
+  padding    : 0px;
+}
+
+.panel {
+  background : $white;
+  display    : inline-block;
+  z-index    : 1;
+  position   : relative;
+  overflow   : hidden;
+  width      : 325px;
+  border     : 1px solid $grey;
+  @include shadow(0 0 5px 0 $grey);
+}
+
+#sidebar {
+  height     : 400px;
+  overflow-x : hidden;
+  overflow-y : auto;
+  z-index    : 1;
+  border-bottom: 3px solid $purple;
+  border-top: 3px solid $purple;
+  margin: .25em .5em;
+}
+
+#sidebar li{
+  line-height: 2.25em;
+  border-bottom: 1px solid $grey;
+}
+
+#sidebar .toggler {
+  display  : block;
+  width    : 100%;
+  color    : $purple;
+  position : relative;
+}
+
+#sidebar .toggler:after {
+  content  : ' ';
+  @include sprite;
+  width    : 26px;
+  height   : 26px;
+  position : absolute;
+  top      : 0;
+  right    : 10px;
+  display  : inline-block;
+}
+
+#sidebar .artist:after {
+  background-position : -33px -153px;
+}
+
+#sidebar .artist:hover:after {
+  background-position : -63px -153px;
+}
+
+#sidebar .audio:after {
+  background-position : -483px -153px;
+}
+
+#sidebar .audio:hover:after {
+  background-position : -513px -153px;
+}
+
+#sidebar .blog:after {
+  background-position : -123px -153px;
+}
+
+#sidebar .blog:hover:after {
+  background-position : -153px -153px;
+}
+
+#sidebar .event:after {
+  background-position : -212px -153px;
+}
+
+#sidebar .event:hover:after {
+  background-position : -242px -153px;
+}
+
+#sidebar .resource:after {
+  background-position : -392px -153px;
+}
+
+#sidebar .resource:hover:after {
+  background-position : -422px -153px;
+}
+
+#sidebar .video:after {
+  background-position : -302px -153px;
+}
+
+#sidebar .video:hover:after {
+  background-position : -332px -153px;
+}
+
+#filters {
+  z-index : 1;
+  height  : 105px;
+}
+
+#filters ul {
+  display: inline-block;
+  width: 48%;
+}
+
+#filters li{
+  margin: 0;
+  padding: 0;
+  line-height: 1.25em;
+}
+
+#toolbar {
+  position : relative;
+  float    : right;
+  z-index  : 1;
+}
+
+#toolbar label, #toolbar button {
+  display : block;
+  border  : 1px solid $grey;
+}
+
+/*Infowindow */
+.gm-style-iw {
+  border  : 1px solid $purple;
+  left    : auto !important;
+  top     : auto !important;
+  padding : .6em 1.65em;
+  @include shadow(1px 1px 3px #888);
+}
+
+button {
+  /*background-image: url(/images/buttons/add.png); /* 16px x 16px */
+  background-color : transparent; /* make the button transparent */
+  /*background-repeat: no-repeat;  /* make the background image appear only once */
+  /*background-position: 0px 0px;  /* equivalent to 'top left' */
+  padding          : 0;
+  margin           : 0;
+  cursor           : pointer; /* make the cursor like hovering over an <a> element */
+  height           : 34px; /* make this the size of your image */
+  /*padding-left     : 34px; /* make text start to the right of the image */
+  vertical-align   : middle; /* align the text vertically centered */
+}
+
+#toolbar input {
+  margin             : 0;
+  padding            : 0;
+  -webkit-appearance : none;
+  -moz-appearance    : none;
+  appearance         : none;
+  width              : 34px;
+  height             : 34px;
+}
+
+#toolbar label {
+  text-indent       : 100%;
+  white-space       : nowrap;
+  overflow          : hidden;
+  width             : 34px;
+  height            : 34px;
+  cursor            : pointer;
+  background-size   : contain;
+  background-repeat : no-repeat;
+}
+
+#toolbar label {
+  @include sprite;
+  background-color : $white;
+}
+
+#toolbar label:hover {
+  filter         : url(filters.svg#grayscale); /* Firefox 3.5+ */
+  filter         : gray; /* IE6-9 */
+  -webkit-filter : grayscale(.75);
+}
+
+#toolbar .global {
+  background-position : -209px -118px;
+}
+
+#toolbar .sseasia {
+  background-position : -117px -118px;
+}
+
+#toolbar .latin {
+  background-position : -149px -118px;
+}
+
+#toolbar .africa {
+  background-position : -178px -118px;
+}
+
+#toolbar .my-location {
+  background-position : -239px -118px;
+}
+
+#toolbar .zoom-in {
+  background-position : -82px -124px;
+}
+
+#toolbar .zoom-out {
+  background-position : -96px -123px;
+}
+
+/*
+ * CSS slider for radio button pair
+ */
+
+/* Started with https://www.paypal-engineering.com/2014/01/15/a-sweet-toggle-switch */
+/* iOS button from http://lea.verou.me/2013/03/ios-6-switch-style-checkboxes-with-pure-css */
+.toggle-btn-group label {
+  padding    : .5em;
+  display    : inline-block;
+  width      : 5em;
+  float      : left;
+  text-align : center;
+  cursor     : pointer;
+}
+
+.toggle-btn-group input[type="radio"]:first-of-type.checked + label:after,
+.toggle-btn-group input[type="radio"]:first-of-type:checked + label:after {
+  left : 0;
+}
+
+.toggle-btn-group input[type="radio"]:first-of-type + label:after {
+  position      : relative;
+  left          : 2em;
+  content       : '';
+  float         : right;
+  width         : 1.25em;
+  height        : 1.25em;
+  margin        : -.1em;
+  border        : 2px solid white;
+  border-radius : 999px;
+  background    : $purple;
+  color         : white;
+  text-shadow   : 0 -1px 1px rgba(0, 0, 0, .3);
+  text-indent   : -2.5em;
+}
+
+.toggle-btn-group label:hover,
+.toggle-btn-group label:focus {
+  color : $grey;
+}
+
+.toggle-btn-group input {
+  position : absolute !important;
+  clip     : rect(1px, 1px, 1px, 1px);
+  overflow : hidden;
+}
