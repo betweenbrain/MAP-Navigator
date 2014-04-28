@@ -25,7 +25,7 @@ class MapnavigatorViewMapnavigator extends JView
 	{
 		parent::__construct();
 		$this->doc = JFactory::getDocument();
-		$this->doc->addScript(JURI::base(true) . '/media/com_mapnavigator/js/map-navigator.js');
+		$this->doc->addScript(JURI::base(true) . '/media/com_mapnavigator/js/map-navigator.min.js');
 		$this->doc->addScript(JURI::base(true) . '/media/com_mapnavigator/js/markerclusterer_compiled.js');
 		$this->doc->addStylesheet(JURI::base(true) . '/media/com_mapnavigator/css/map-navigator.min.css');
 	}

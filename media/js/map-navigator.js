@@ -327,6 +327,7 @@ function initialize() {
 function addMarker(location, object) {
 
 	// Modified from http://stackoverflow.com/a/9143850/901680
+	/*
 	var lng_radius = 0.00007,         // degrees of longitude separation
 		lat_to_lng = 111.23 / 71.7,  // lat to long proportion in Warsaw
 		angle = 0.25,                 // starting angle, in radians
@@ -346,6 +347,7 @@ function addMarker(location, object) {
 
 		}
 	}
+	*/
 
 	var marker = new google.maps.Marker({
 		position: location,
