@@ -39,6 +39,7 @@ $purple : #8a2b87;
   left        : 371px;
   margin-left : 0 !important;
 }
+
 /* End MAP template overrides */
 
 .map-navigator {
@@ -99,16 +100,17 @@ $purple : #8a2b87;
   width    : 26px;
   height   : 26px;
   position : absolute;
-  top      : 4px;
   display  : inline-block;
 }
 
 #filters li:before {
   left : 10px;
+  top  : -6px;
 }
 
 #sidebar .toggler:after {
   right : 10px;
+  top   : 4px;
 }
 
 #sidebar .artist:after {

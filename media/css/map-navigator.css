@@ -77,14 +77,15 @@
   width: 26px;
   height: 26px;
   position: absolute;
-  top: 4px;
   display: inline-block; }
 
 #filters li:before {
-  left: 10px; }
+  left: 10px;
+  top: -6px; }
 
 #sidebar .toggler:after {
-  right: 10px; }
+  right: 10px;
+  top: 4px; }
 
 #sidebar .artist:after {
   background-position: -33px -153px; }
