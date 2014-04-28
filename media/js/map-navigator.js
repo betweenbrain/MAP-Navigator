@@ -413,9 +413,9 @@ function createSidebarElement(marker) {
 	//Creates a sidebar button
 	var ul = document.getElementById('sidebar');
 	var li = document.createElement('li');
-	li.className = marker.alias;
+	li.className = 'toggler ' + marker.category;
 	var title = marker.getTitle();
-	li.innerHTML = '<a class="' + marker.category + '">' + marker.title + '</a><div class="toggle" style="display: none">' + marker.text + '</div>';
+	li.innerHTML = '<a>' + marker.title + '</a><div class="toggle" style="display: none">' + marker.text + '</div>';
 	ul.appendChild(li);
 
 	//Trigger a marker event when a sidebar item is acted on
