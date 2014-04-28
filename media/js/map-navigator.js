@@ -413,7 +413,7 @@ function createSidebarElement(marker) {
 	//Creates a sidebar button
 	var ul = document.getElementById('sidebar');
 	var li = document.createElement('li');
-	li.className = 'toggler ' + marker.category;
+	li.className = marker.alias + ' toggler ' + marker.category;
 	var title = marker.getTitle();
 	li.innerHTML = '<a>' + marker.title + '</a><div class="toggle" style="display: none">' + marker.text + '</div>';
 	ul.appendChild(li);
