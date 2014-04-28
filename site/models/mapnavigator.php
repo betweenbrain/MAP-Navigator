@@ -77,6 +77,7 @@ class MapnavigatorModelMapnavigator extends JModel
 			' WHERE ' . $this->db->nameQuote('cats.catid') . ' IN (' . implode(',', JRequest::getVar('categories')) . ')' .
 
 			// Published items only
+			' AND ' . $this->db->nameQuote('published') . ' = ' . $this->db->quote('1') .
 			' AND ' . $this->db->nameQuote('k2.trash') . ' = ' . $this->db->quote('0');
 
 		$this->db->setQuery($query);
@@ -122,7 +123,8 @@ class MapnavigatorModelMapnavigator extends JModel
 			$this->db->nameQuote('alias') .
 			' FROM ' . $this->db->nameQuote('#__k2_categories') .
 			' WHERE ' . $this->db->nameQuote('id') . ' IN (' . implode(',', $this->params->get('regionCategories')) . ')' .
-			' AND ' . $this->db->nameQuote('published') . ' = ' . $this->db->quote('1');
+			' AND ' . $this->db->nameQuote('published') . ' = ' . $this->db->quote('1') .
+			' AND ' . $this->db->nameQuote('trash') . ' = ' . $this->db->quote('0');
 
 		$this->db->setQuery($query);
 
