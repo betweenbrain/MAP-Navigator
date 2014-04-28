@@ -9,11 +9,25 @@
  */
 /* Variables */
 /* Mixins */
+/* MAP template overrides */
+#content {
+  width: 100% !important;
+  position: relative !important;
+  top: -22px !important; }
+
+#nav {
+  top: 0 !important;
+  left: 371px;
+  margin-left: 0 !important; }
+
+/* End MAP template overrides */
 .map-navigator {
   position: absolute;
   width: 902px;
   left: 50%;
-  margin-left: -451px; }
+  margin-left: -451px;
+  top: 120px;
+  /* MAP template override */ }
 
 #map-canvas {
   min-height: 800px;

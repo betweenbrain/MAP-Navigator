@@ -27,11 +27,26 @@ $purple : #8a2b87;
   background-size   : 788px 210px;
 }
 
+/* MAP template overrides */
+#content {
+  width    : 100% !important;
+  position : relative !important;
+  top      : -22px !important;
+}
+
+#nav {
+  top         : 0 !important;
+  left        : 371px;
+  margin-left : 0 !important;
+}
+/* End MAP template overrides */
+
 .map-navigator {
   position    : absolute;
   width       : 902px;
   left        : 50%;
   margin-left : -451px;
+  top         : 120px; /* MAP template override */
 }
 
 #map-canvas {
@@ -189,6 +204,7 @@ $purple : #8a2b87;
 #filters .resource:before {
   background-position : -366px -153px;
 }
+
 #filters .video:before {
   background-position : -276px -153px;
 }
