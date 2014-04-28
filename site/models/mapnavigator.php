@@ -63,6 +63,7 @@ class MapnavigatorModelMapnavigator extends JModel
 			' ON (' . $this->db->nameQuote('cat.id') . ' = ' . $this->db->nameQuote('cats.catid') . ')' .
 			' WHERE ' . $this->db->nameQuote('k2.id') . ' = ' . $this->db->nameQuote('cats.itemId') .
 			' AND ' . $this->db->nameQuote('cat.id') . ' NOT IN (' . implode(',', $this->params->get('regionCategories')) . ')' .
+			' AND ' . $this->db->nameQuote('parent') . ' = ' . $this->db->quote($this->params->get('primaryCategory')) .
 			' LIMIT 1 ' .
 			') AS ' . $this->db->nameQuote('category') .
 
@@ -123,8 +124,7 @@ class MapnavigatorModelMapnavigator extends JModel
 			$this->db->nameQuote('alias') .
 			' FROM ' . $this->db->nameQuote('#__k2_categories') .
 			' WHERE ' . $this->db->nameQuote('id') . ' IN (' . implode(',', $this->params->get('regionCategories')) . ')' .
-			' AND ' . $this->db->nameQuote('published') . ' = ' . $this->db->quote('1') .
-			' AND ' . $this->db->nameQuote('trash') . ' = ' . $this->db->quote('0');
+			' AND ' . $this->db->nameQuote('published') . ' = ' . $this->db->quote('1');
 
 		$this->db->setQuery($query);
 
